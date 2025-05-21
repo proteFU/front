@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a72360f9-8f6f-42d4-996f-e15bee4dd4eb" name="변경" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "0-jwook"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/proteFU/front.git",
+    "accountId": "d73870d9-bd07-41e1-9a2d-71d5c54bd32d"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="2xPRkzYO4kzASfDe3b6fS2iVL4m" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "feat#4",
+    "javascript.nodejs.core.library.configured.version": "23.9.0",
+    "javascript.nodejs.core.library.typings.version": "22.15.18",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_interpreter_path": "node",
+    "nodejs_package_manager_path": "pnpm",
+    "settings.editor.selected.configurable": "settings.nodejs",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-WS-251.23774.424" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="a72360f9-8f6f-42d4-996f-e15bee4dd4eb" name="변경" comment="" />
+      <created>1747837868917</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1747837868917</updated>
+      <workItem from="1747837870931" duration="2369000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
