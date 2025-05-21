@@ -1,8 +1,8 @@
 import { css } from '@emotion/css';
 import "./App.css";
 import album from '../assets/album.png'
-import arrow from "../assets/arrow.png";
 import MusicPlayBar from '../Shared/MusicPlayBar';
+import BackIcon from '../Shared/BackIcon';
 
 const lyrics = [
   { text: "How do I look? 내가 변했나구?" },
@@ -14,7 +14,7 @@ const lyrics = [
 function App() {
   return (
     <div className={container}>
-      <img src={arrow} alt="arrow" className={arrowStyle} />
+      <BackIcon />
       <div className={Wrapper}>
         <div className={TopContent}>
           <img src={album} alt="album" className={albumStyle} />
@@ -42,13 +42,6 @@ const container = css`
   position: relative;
   width: 361px;
   height: 798px;
-`;
-
-const arrowStyle = css`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 24px;
 `;
 
 const Wrapper = css`
