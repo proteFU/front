@@ -1,17 +1,30 @@
-@font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-}
-
 #root {
+    position: relative;
     display: flex;
     max-width: 393px;
     height: 852px;
     justify-content: center;
     align-items: center;
+    background-color: black;
+    font-family: 'Pretendard-Regular';
+    overflow: hidden;
+}
+
+#root::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-image: url('/public/songBG.png');
     background-size: cover;
     background-position: center;
+    opacity: 0.3;
+    z-index: 0;
+}
+
+#root > * {
+    position: relative;
+    z-index: 1; 
 }
