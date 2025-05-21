@@ -14,7 +14,6 @@ import {
 } from 'chart.js';
 import './App.css';
 
-
 ChartJS.register(
   CategoryScale,
   LinearScale,
