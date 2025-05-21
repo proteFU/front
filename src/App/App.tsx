@@ -21,16 +21,16 @@ function App() {
           <div className={SongnameStyle}>Bad News</div>
           <div className={SongMakerStyle}>kiss of life</div>
         </div>
-      <div className={LyricsWrapper}>
-        {lyrics.map((line, index) => (
-          <div
-            key={index}
-            className={LyricLine}
-          >
-            {line.text}
-            </div>
-          ))}
-        </div>
+          <div className={LyricsWrapper}>
+            {lyrics.map((line, index) => (
+              <div
+                key={index}
+                className={index === 1 ? `${LyricLine} ${highlight}` : LyricLine}
+              >
+                {line.text}
+              </div>
+            ))}
+          </div>
         <MusicPlayBar />
       </div>
     </div>
@@ -89,6 +89,12 @@ const LyricsWrapper = css`
 const LyricLine = css`
   font-size: 14px;
   color: #ccc;
+`;
+
+const highlight = css`
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff; 
 `;
 
 export default App;
