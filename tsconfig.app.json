@@ -8,7 +8,7 @@
     "skipLibCheck": true,
 
     /* Bundler mode */
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
@@ -20,8 +20,7 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["src"]
 }
