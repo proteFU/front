@@ -1,124 +1,101 @@
-/** @jsxImportSource @emotion/react */
-import React, { useEffect, useRef } from 'react';
-import styled from '@emotion/styled';
-import anime from 'animejs/lib/anime.es.js';
-import { Bar } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-} from 'chart.js';
-import './App.css';
+import { css } from '@emotion/css';
+import "./App.css";
+import album from '../assets/album.png'
+import arrow from "../assets/arrow.png";
+import MusicPlayBar from '../Shared/MusicPlayBar';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+const lyrics = [
+  { text: "How do I look? 내가 변했나구?" },
+  { text: "티비를 틀어봐 I'm the woman on the moon" },
+  { text: "네 머리 위로 사뿐사뿐 걸어 feel no gravity" },
+];
 
-const AnimatedBox = styled.div`
-  width: 100px;
-  height: 100px;
-  background-color: #61dafb;
-  margin: 20px auto;
-`;
 
-const ChartContainer = styled.div`
-  width: 400px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-`;
-
-const App: React.FC = () => {
-  const boxRef = useRef<HTMLDivElement>(null);
-
-  const chartData = {
-    labels: ['1월', '2월', '3월', '4월', '5월', '6월'],
-    datasets: [
-      {
-        label: '월별 데이터',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.5)',
-          'rgba(54, 162, 235, 0.5)',
-          'rgba(255, 206, 86, 0.5)',
-          'rgba(75, 192, 192, 0.5)',
-          'rgba(153, 102, 255, 0.5)',
-          'rgba(255, 159, 64, 0.5)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
-
-  const chartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top' as const,
-      },
-      title: {
-        display: true,
-        text: '월별 데이터 차트',
-      },
-    },
-  };
-
-  useEffect(() => {
-    if (boxRef.current) {
-      (anime as any)({
-        targets: boxRef.current,
-        translateX: 250,
-        rotate: '1turn',
-        backgroundColor: '#FFC0CB',
-        duration: 2000,
-        loop: true,
-        direction: 'alternate',
-        easing: 'easeInOutQuad',
-        autoplay: true
-      });
-    }
-  }, []);
-
+function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <AnimatedBox ref={boxRef} />
-        <ChartContainer>
-          <Bar data={chartData} options={chartOptions} />
-        </ChartContainer>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={container}>
+      <img src={arrow} alt="arrow" className={arrowStyle} />
+      <div className={Wrapper}>
+        <div className={TopContent}>
+          <img src={album} alt="album" className={albumStyle} />
+          <div className={SongnameStyle}>Bad News</div>
+          <div className={SongMakerStyle}>kiss of life</div>
+        </div>
+      <div className={LyricsWrapper}>
+        {lyrics.map((line, index) => (
+          <div
+            key={index}
+            className={LyricLine}
+          >
+            {line.text}
+            </div>
+          ))}
+        </div>
+        <MusicPlayBar />
+      </div>
     </div>
   );
 }
+
+
+const container = css`
+  position: relative;
+  width: 361px;
+  height: 798px;
+`;
+
+const arrowStyle = css`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+`;
+
+const Wrapper = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
+
+const albumStyle = css`
+  width: 236px;
+  height: 238px;
+  border-radius: 999px;
+`;
+
+const SongnameStyle = css`
+  margin-top: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+`;
+
+const SongMakerStyle = css`
+  margin-top: 4px;
+  font-size: 14px;
+  color: #fff;
+`;
+
+const TopContent = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const LyricsWrapper = css`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  cursor: pointer;
+  gap: 4px;
+  margin-top: 4%;
+`;
+
+const LyricLine = css`
+  font-size: 14px;
+  color: #ccc;
+`;
 
 export default App;
