@@ -13,21 +13,27 @@ function MusicPlayBar() {
     };
     
     return (
-        <>
-            <div className={Line}>.</div>
+        <div className={wrapper}>
+            <div className={Line}></div>
             <div className={container}>
-            <img src={left} alt="left" />
-            <img
-                src={isPlaying ? ing : stop}
-                alt={isPlaying ? "playing" : "stopped"}
-                onClick={togglePlay}
-                className={PlayStyle}
-            />
-            <img src={right} alt="right" />
+                <img src={left} alt="left" />
+                <img
+                    src={isPlaying ? ing : stop}
+                    alt={isPlaying ? "playing" : "stopped"}
+                    onClick={togglePlay}
+                    className={PlayStyle}
+                />
+                <img src={right} alt="right" />
             </div>
-        </>
+        </div>
     );
 }
+
+const wrapper = css`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
 
 const container = css`
     display: flex;
@@ -49,6 +55,5 @@ const Line = css`
     border: #fff;
     margin-top: 52px;
 `;
-
 
 export default MusicPlayBar;
