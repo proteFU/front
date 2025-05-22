@@ -59,6 +59,16 @@ const albumStyle = css`
   width: 236px;
   height: 238px;
   border-radius: 999px;
+  animation: rotateAlbum 16s linear infinite;
+
+  @keyframes rotateAlbum {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 const SongnameStyle = css`
