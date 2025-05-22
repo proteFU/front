@@ -1,4 +1,5 @@
 import { css } from '@emotion/css';
+import { useNavigate } from 'react-router-dom';
 import "./App.css";
 import album from '../assets/album.png'
 import MusicPlayBar from '../Shared/MusicPlayBar';
@@ -12,6 +13,7 @@ const lyrics = [
 
 
 function App() {
+  const navigate = useNavigate();
   return (
     <div className={container}>
       <BackIcon />
@@ -24,8 +26,9 @@ function App() {
           <div className={LyricsWrapper}>
             {lyrics.map((line, index) => (
               <div
-                key={index}
-                className={index === 1 ? `${LyricLine} ${highlight}` : LyricLine}
+              key={index}
+              className={index === 1 ? `${LyricLine} ${highlight}` : LyricLine}
+              onClick={() => navigate('/music-detail')}
               >
                 {line.text}
               </div>

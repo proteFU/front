@@ -3,7 +3,7 @@ import album from "../assets/album.png";
 import MusicPlayBar from '../Shared/MusicPlayBar';
 import heart from "../assets/heart.png";
 import BackIcon from '../Shared/BackIcon';
-import "./App.css";
+import "../App/App.css";
 
 const lyrics = [
     "How do I look? 내가 변했나구?",
