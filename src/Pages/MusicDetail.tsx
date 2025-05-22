@@ -103,7 +103,7 @@ const LyricsSection = css`
     padding: 0 16px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 12px;
 `;
 
 const lyricLine = css`
@@ -116,7 +116,7 @@ const lyricLine = css`
 const focusedLyric = css`
     font-size: 24px;
     color: #fff;
-    font-weight: 500;
+    font-weight: 600;
     text-align: left;
 `;
 
