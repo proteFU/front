@@ -10,6 +10,7 @@ interface CircleSectionProps {
     colors?: string[];
     sections?: number; // 선택된 감정의 갯수 (작은 원 또는 섹션 채우기 기준)
     selectedEmotions?: string[]; // 선택된 감정 이름 배열
+    isClicked?: boolean; // 버튼 클릭 상태
 }
 
 const CircleContainer = css`
@@ -24,7 +25,7 @@ const Circle = css`
     height: 180px;
     display: block;
     position: relative;
-    z-index: 2;
+    z-index: 4;
 `;
 
 const BlurredCircle = css`
@@ -43,7 +44,55 @@ const CenterImage = css`
     z-index: 1;
 `;
 
-const EmotionCircle: React.FC<CircleSectionProps> = ({ colors = [], sections = 0, selectedEmotions }) => {
+const GlowEffect = css`
+    @keyframes glow {
+        0% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+        }
+        20% {
+            opacity: 0.15;
+            transform: translate(-50%, -50%) scale(0.6);
+        }
+        40% {
+            opacity: 0.3;
+            transform: translate(-50%, -50%) scale(0.7);
+        }
+        60% {
+            opacity: 0.45;
+            transform: translate(-50%, -50%) scale(0.8);
+        }
+        100% {
+            opacity: 0.6;
+            transform: translate(-50%, -50%) scale(1);
+        }
+    }
+`;
+
+const glowStyle = css`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 220px;
+    height: 220px;
+    opacity: 0.2;
+    background: radial-gradient(circle, 
+        rgba(255,255,255,1) 0%, 
+        rgba(255,255,255,0.8) 30%,
+        rgba(255,255,255,0.6) 50%,
+        rgba(255,255,255,0.4) 70%,
+        rgba(255,255,255,0) 100%
+    );
+    animation: glow 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    z-index: 0;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(12px);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+`;
+
+const EmotionCircle: React.FC<CircleSectionProps> = ({ colors = [], sections = 0, selectedEmotions, isClicked = false }) => {
     const centerX = 50; // 중심 좌표
     const centerY = 50; // 중심 좌표
     const innerRadius = 37; // 내부 채워지는 영역의 반지름
@@ -55,9 +104,31 @@ const EmotionCircle: React.FC<CircleSectionProps> = ({ colors = [], sections = 0
     const distanceIncreasePerSection = 1.2; // 개수 늘어날 때마다 거리 늘어나는 양
     const minInnerCircleRadius = 1; // 최소 반지름
 
+    const continueButtonStyle = css`
+        position: absolute;
+        bottom: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: none;
+        border: none;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        padding: 8px 20px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+        z-index: 4;
+    `;
+
+    const handleClick = () => {
+        console.log('버튼이 클릭되었습니다');
+        console.log(true);
+    };
+
     return (
         <div css={CircleContainer}>
-            <svg css={Circle} viewBox="0 0 100 100"> {/* SVG 크기와 viewBox */}
+            {isClicked && <div css={[glowStyle, GlowEffect]} />}
+            <svg css={Circle} viewBox="0 0 100 100">
                 {/* 가장 바깥쪽 흰색 블러 스트로크 원 */}
                 <circle
                     cx={centerX}
@@ -126,7 +197,7 @@ const EmotionCircle: React.FC<CircleSectionProps> = ({ colors = [], sections = 0
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    zIndex: 1,
+                    zIndex: 2,
                     objectFit: 'cover'
                 }} 
             />
@@ -145,6 +216,12 @@ const EmotionCircle: React.FC<CircleSectionProps> = ({ colors = [], sections = 0
                     objectFit: 'cover'
                 }} 
             />
+            <button 
+                css={continueButtonStyle}
+                onClick={handleClick}
+            >
+                Continue
+            </button>
         </div>
     );
 };

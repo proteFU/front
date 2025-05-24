@@ -86,6 +86,7 @@ const ChooseEmotion: React.FC = () => {
     ];
     const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
     const [count, setCount] = useState(0);
+    const [isClicked, setIsClicked] = useState(false);
 
     useEffect(() => {
         setCount(selectedEmotions.length);
@@ -99,6 +100,12 @@ const ChooseEmotion: React.FC = () => {
                 return [...prev, emotion];
             }
         });
+    };
+
+    const handleContinueClick = () => {
+        setIsClicked(true);
+        console.log(true);
+        console.log(selectedEmotions.length > 0 ? selectedEmotions : 'null');
     };
 
     const selectedColors = selectedEmotions.map(emotionName => {
@@ -115,6 +122,7 @@ const ChooseEmotion: React.FC = () => {
                     colors={selectedColors}
                     sections={count}
                     selectedEmotions={selectedEmotions}
+                    isClicked={isClicked}
                 />
                 <div css={EmotionGrid}>
                     {emotions.map((emotion, index) => (
@@ -128,7 +136,7 @@ const ChooseEmotion: React.FC = () => {
                         </div>
                     ))}
                 </div>
-                <div onClick={() => console.log(selectedEmotions.length > 0 ? selectedEmotions : 'null')}>
+                <div onClick={handleContinueClick}>
                     <Button text='Continue' />
                 </div>
             </div>

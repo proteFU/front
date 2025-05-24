@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
+import React, { useState } from 'react';
 import { css } from '@emotion/react';
 
 interface ButtonProps {
     text: string;
+    onClick?: () => void;
 }
 
 const buttonStyle = css`
@@ -17,11 +18,21 @@ const buttonStyle = css`
     align-items: center;
     font-size: 14px;
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
 `;
 
-const Button: React.FC<ButtonProps> = ({ text }) => {
+const Button: React.FC<ButtonProps> = ({ text, onClick }) => {
+    const [isClicked, setIsClicked] = useState(false);
+
+    const handleClick = () => {
+        setIsClicked(true);
+        console.log(true);
+        if (onClick) onClick();
+    };
+
     return (
-        <div css={buttonStyle}>
+        <div css={buttonStyle} onClick={handleClick}>
             {text}
         </div>
     );
