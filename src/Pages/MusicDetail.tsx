@@ -1,9 +1,116 @@
-import { css } from "@emotion/css";
+import styled from "@emotion/styled";
+import { useState, useEffect } from "react";
 import album from "../assets/album.png";
-import MusicPlayBar from '../Shared/MusicPlayBar';
-import heart from "../assets/heart.png";
-import BackIcon from '../Shared/BackIcon';
+import heartIcon from "../assets/heart.svg";
+import MusicPlayBar from "../shared/ui/MusicPlayBar";
 import "../App/App.css";
+import BackIcon from "../shared/ui/BackIcon";
+
+const Background = styled.div`
+    width: 100%;
+    min-height: 852px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+const Container = styled.div`
+    width: 361px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0 4px;
+    color: white;
+    position: relative;
+`;
+
+const MainContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 20px;
+    margin-bottom: 40px;
+`;
+
+const AlbumContainer = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+`;
+
+const AlbumImageContainer = styled.div`
+    position: relative;
+    cursor: pointer;
+`;
+
+const AlbumArt = styled.img`
+    width: 80px;
+    height: 80px;
+    border-radius: 99px;
+    object-fit: cover;
+`;
+
+const SongInfoContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+`;
+
+const Title = styled.div`
+    font-size: 20px;
+    font-weight: 600;
+    color: #FFF;
+`;
+
+const Artist = styled.div`
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+`;
+interface LikeButtonProps {
+    isLiked: boolean;
+}
+
+const LikeButton = styled.button<LikeButtonProps>`
+    background: none;
+    border: none;
+    left: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    img {
+        width: 24px;
+        height: 24px;
+        opacity: ${props => props.isLiked ? 1 : 0.6};
+    }
+`;
+
+const LyricsContainer = styled.div`
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 4px;
+    
+    &::-webkit-scrollbar {
+        display: none;
+    }
+`;
+
+const LyricLine = styled.div<{ isHighlight?: boolean }>`
+    font-size: 20px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+    color: ${props => props.isHighlight ? '#FFF' : 'rgba(255, 255, 255, 0.5)'};
+    font-weight: ${props => props.isHighlight ? '500' : 'normal'};
+    font-size: ${props => props.isHighlight ? '24px' : '20px'};
+`;
+
+const PlayBarWrapper = styled.div`
+    display: flex;
+    width: 100%;
+    margin-bottom: 90px;
+`;
 
 const lyrics = [
     "How do I look? 내가 변했나구?",
@@ -19,105 +126,82 @@ const lyrics = [
     "Something's comin', comin', comin' (ah)"
 ];
 
-function MusicDetail() {
+const MusicDetail = () => {
+    const [isLiked, setIsLiked] = useState(false);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const totalDuration = 210;
+
+    useEffect(() => {
+        let interval: number;
+        
+        if (isPlaying) {
+            interval = window.setInterval(() => {
+                setCurrentTime((prev: number) => {
+                    if (prev >= totalDuration) {
+                        setIsPlaying(false);
+                        return totalDuration;
+                    }
+                    return prev + 1;
+                });
+            }, 1000);
+        }
+
+        return () => {
+            if (interval) clearInterval(interval);
+        };
+    }, [isPlaying, totalDuration]);
+
+    const toggleLike = () => {
+        setIsLiked(!isLiked);
+    };
+
+    const handlePlayPause = (playing: boolean) => {
+        setIsPlaying(playing);
+    };
+
     return (
-        <div className={container}>
-        <BackIcon />
-        <div className={TopSection}>
-            <img src={album} alt="album" className={albumStyle} />
-            <div className={Textcontainer}>
-                <div className={SongName}>Bad News</div>
-                <div className={ArtistName}>kiss of life</div>
-            </div>
-            <img src={heart} alt="heart" className={HeartIcon} />
-        </div>
-        <div className={LyricsSection}>
-            {lyrics.map((line, idx) => (
-            <div
-                key={idx}
-                className={`${lyricLine} ${idx === 1 ? focusedLyric : ""}`}
-            >
-                {line}
-            </div>
-            ))}
-        </div>
-        <MusicPlayBar />
-        </div>
+        <Background>
+            <Container>
+                <BackIcon />
+                <MainContent>
+                    <AlbumContainer>
+                        <AlbumImageContainer>
+                            <AlbumArt 
+                                src={album} 
+                                alt="Bad News"
+                            />
+                        </AlbumImageContainer>
+                        <SongInfoContainer>
+                            <Title>Bad News</Title>
+                            <Artist>kiss of life</Artist>
+                        </SongInfoContainer>
+                        <LikeButton onClick={toggleLike} isLiked={isLiked}>
+                            <img src={heartIcon} alt="Like" />
+                        </LikeButton>
+                    </AlbumContainer>
+                    <LyricsContainer>
+                        {lyrics.map((lyric, index) => (
+                            <LyricLine 
+                                key={index} 
+                                isHighlight={index === 1}
+                            >
+                                {lyric}
+                            </LyricLine>
+                        ))}
+                    </LyricsContainer>
+                </MainContent>
+                <PlayBarWrapper>
+                    <MusicPlayBar 
+                        isPlaying={isPlaying}
+                        onPlayPause={handlePlayPause}
+                        currentTime={currentTime}
+                        totalDuration={totalDuration}
+                    />
+                </PlayBarWrapper>
+            </Container>
+        </Background>
     );
-}
-
-const container = css`
-    width: 361px;
-    height: 798px;
-    position: relative;
-    padding: 16px;
-    color: white;
-`;
-
-const TopSection = css`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 36px;
-`;
-
-const HeartIcon = css`
-    width: 24px;
-`;
-
-const albumStyle = css`
-    width: 94px;
-    height: 94px;
-    border-radius: 999px;
-    animation: rotateAlbum 20s linear infinite;
-
-    @keyframes rotateAlbum {
-        from {
-        transform: rotate(0deg);
-        }
-        to {
-        transform: rotate(360deg);
-        }
-    }
-`;
-const SongName = css`
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 8px;
-`;
-
-const Textcontainer = css`
-    display: flex;
-    flex-direction: column;
-    margin-left: 12px;
-    flex: 1;
-`;
-
-const ArtistName = css`
-    font-size: 14px;
-    color: #fff;
-`;
-
-const LyricsSection = css`
-    margin-top: 24px;
-    padding: 0 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-`;
-
-const lyricLine = css`
-    font-size: 20px;
-    color: #ccc;
-    text-align: center;
-    text-align: left;
-`;
-
-const focusedLyric = css`
-    font-size: 24px;
-    color: #fff;
-    font-weight: 600;
-    text-align: left;
-`;
+};
 
 export default MusicDetail;
