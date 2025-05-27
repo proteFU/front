@@ -5,43 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a72360f9-8f6f-42d4-996f-e15bee4dd4eb" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Shared/NavigateBar.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Shared/PlayListTumbnaill/PlayListThumbnail.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Shared/SongTumbnaill/SongThumbnaill.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/HomeIcon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/PlayIcon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dummyImage/1.JPG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dummyImage/10.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dummyImage/11.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dummyImage/12.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dummyImage/13.JPG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dummyImage/14.JPG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dummyImage/15.JPG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dummyImage/16.JPG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dummyImage/17.JPG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dummyImage/18.JPG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dummyImage/19.JPG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dummyImage/2.JPG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dummyImage/3.JPG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dummyImage/4.JPG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dummyImage/5.JPG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dummyImage/6.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dummyImage/7.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dummyImage/8.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dummyImage/9.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dummyThumbnail.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/proteBackground.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/proteBackground2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entites/example" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/Favorite/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Features/example" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/PlayList/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Pages/example" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/dummy.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Process/example" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Shared/example" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pages/Favorite/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/Favorite/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/widgets/example" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +86,7 @@
       <workItem from="1747837870931" duration="2369000" />
       <workItem from="1748291787230" duration="6221000" />
       <workItem from="1748321766359" duration="17000" />
-      <workItem from="1748322429422" duration="1836000" />
+      <workItem from="1748322429422" duration="2802000" />
     </task>
     <servers />
   </component>

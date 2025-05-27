@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import anime from 'animejs/lib/anime.es.js';
 import { Bar } from 'react-chartjs-2';
-import PlayList from '../Pages/PlayList';
+import PlayList from '../Pages/PlayList/PlayList.tsx';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,8 +13,7 @@ import {
   Tooltip,
   Legend
 } from 'chart.js';
-import './App.css';
-import Favorite from "../Pages/Favorite";
+import Favorite from "../Pages/Favorite/Favorite.tsx";
 
 ChartJS.register(
   CategoryScale,

@@ -30,7 +30,7 @@ const Favorite = () => {
 }
 
 const Root = styled.div`
-    width: 361px;
+    width: 361px; 
     height: 798px;
     background-image: url(${MainBackgroundImage});
     background-color: #292929;
