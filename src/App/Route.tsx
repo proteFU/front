@@ -6,12 +6,12 @@ import NotFound from '../Pages/NotFound';
 import MusicDetail from '../Pages/MusicDetail';
 import Home from '../Pages/Home';
 import ChooseEmotion from '../Pages/ChooseEmotion';
-import GNB from '../Shared/UI/GNB';
-import styled from "@emotion/styled";
 import Login from "../Pages/Login";
 import SignUp from "../Pages/SignUp";
 import Favorite from '../Pages/Favorite';
 import playList from '../Pages/PlayList';
+import GNB from '../Shared/UI/GNB';
+import styled from "@emotion/styled";
 
 const PageContainer = styled.div`
     width: 100%;

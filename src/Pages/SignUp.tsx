@@ -115,7 +115,7 @@ const SignUp = () => {
     return (
         <Background>
             <Container>
-                <HeadText text="Sign Up" img={Cancel}/>
+                <HeadText text="Sign Up" img={Cancel} onClick={() => navigate(-1)}/>
                 <Form>
                     <ImageUploadContainer>
                         <ProfileImage 
