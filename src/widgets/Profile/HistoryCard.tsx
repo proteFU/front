@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 import ShareIcon from '../../assets/공유.svg';
 import HamburgerIcon from '../../assets/햄버거.svg';
 import type { HistoryCardProps } from "../../types/Profile/HistoryCardProps";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const Container = styled.div`
     display: flex;
@@ -113,26 +114,40 @@ const CloseButton = styled(MenuButton)`
 
 const HistoryCard = ({ title, image, createdBy, onShare }: HistoryCardProps) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [playlistData, setPlaylistData] = useState<any>(null);
+
+    const getPlaylistHistory = async () => {
+        try {
+            const response = await axios.get('https://lazy-shaylah-guhyunwoo-777b581b.koyeb.app/songs/likes');
+            setPlaylistData(response.data);
+        } catch (error) {
+            console.error("플레이리스트 히스토리 조회 실패", error);
+        }
+    };
+
+    useEffect(() => {
+        getPlaylistHistory();
+    }, []);
 
     const handleDelete = () => {
         // TODO: 삭제 API 연동
-        alert("삭제 기능 준비 중입니다.");
+        alert("delete function is under development.");
         setIsMenuOpen(false);
     };
 
     const handleEdit = () => {
         // TODO: 수정 페이지로 이동
-        alert("수정 기능 준비 중입니다.");
+        alert("edit function is under development.");
         setIsMenuOpen(false);
     };
 
     return (
         <Container>
             <HistoryContainer>
-                <ImageContainer src={image} />
+                <ImageContainer src={playlistData?.image || image} />
                 <TextContainer>
-                    <TitleText>{title}</TitleText>
-                    <SubText>{createdBy}</SubText>
+                    <TitleText>{playlistData?.title || title}</TitleText>
+                    <SubText>{playlistData?.createdBy || createdBy}</SubText>
                 </TextContainer>
             </HistoryContainer>
             <IconContainer>
