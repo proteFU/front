@@ -12,6 +12,7 @@ const Button = styled.button`
     border: none;
     background-color: #6425BE;
     color: #FFF;
+    padding: 12px 0;
 `;
 
 const Text = styled.span`

@@ -1,12 +1,6 @@
 import { css } from "@emotion/react";
 import BackgroundImage from "../../assets/배경화면.png";
 
-export const mobile = css`
-    @media (max-width: 393px) {
-        width: 100%;
-    }
-`;
-
 export const container = css`
     width: 100%;
     max-width: 393px;
@@ -28,6 +22,11 @@ export const background = css`
     background: url(${BackgroundImage}) no-repeat;
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
     width: 100vw;
     min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
 `;
