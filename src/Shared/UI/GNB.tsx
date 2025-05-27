@@ -43,6 +43,10 @@ const Text = styled.span`
     line-height: normal;
 `;
 
+const UsedText = styled.span`
+    color: #6425BE;
+`;
+
 const GNBImage = styled.img`
     width: 24px;
     height: 24px;
@@ -57,19 +61,19 @@ const GNB = () => {
         <GNBContainer>
             <GNBButton>
                 <GNBImage src={isActive("/") ? UsedHome : Home} alt="home" onClick={() => navigate("/")}/>
-                <Text>Home</Text>
+                {isActive("/") ? <UsedText>Home</UsedText> : <Text>Home</Text>}
             </GNBButton>
             <GNBButton>
                 <GNBImage src={isActive("/choose-emotion") || isActive("/music-player") || isActive("/music-detail") ? UsedEmotion : Emotion} alt="emotion" onClick={() => navigate("/choose-emotion")}/>
-                <Text>Emotion</Text>
+                {isActive("/choose-emotion") || isActive("/music-player") || isActive("/music-detail") ? <UsedText>Emotion</UsedText> : <Text>Emotion</Text>}
             </GNBButton>
             <GNBButton>
                 <GNBImage src={isActive("/favorite") ? UsedFavorite : Favorite} alt="favorite" onClick={() => navigate("/favorite")}/>
-                <Text>Favorite</Text>
+                {isActive("/favorite") ? <UsedText>Favorite</UsedText> : <Text>Favorite</Text>}
             </GNBButton>
             <GNBButton>
-                <GNBImage src={isActive("/profile") ? UsedProfile : Profile} alt="profile" onClick={() => navigate("/profile")}/>
-                <Text>Profile</Text>
+                <GNBImage src={isActive("/profile") || isActive("/login") || isActive("/sign-up") ? UsedProfile : Profile} alt="profile" onClick={() => navigate("/profile")}/>
+                {isActive("/profile") || isActive("/login") || isActive("/sign-up") ? <UsedText>Profile</UsedText> : <Text>Profile</Text>}
             </GNBButton>
         </GNBContainer>
     )

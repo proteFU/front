@@ -7,6 +7,7 @@ import HeadText from "../Shared/UI/HeadText";
 import { InputContainer, InnerContainer, InputLabel, StyledInput } from "../Shared/UI/Input";
 import ButtonFunction from "../Shared/UI/Button";
 import axios from "axios";
+import Cancel from "../assets/취소.svg";
 
 const Background = styled.div`
     ${background}
@@ -52,17 +53,17 @@ const Login = () => {
                 localStorage.setItem('token', response.data.token);
                 navigate('/');
             } else {
-                alert('로그인에 실패했습니다.');
+                alert('Login failed.');
             }
         } catch (error) {
-            alert('로그인 중 오류가 발생했습니다.');
+            alert('Login failed.');
         }
     };
 
     return (
         <Background>
             <Container>
-                <HeadText text="로그인" />
+                <HeadText text="Login" img={Cancel}/>
                 <Form>
                 <InputContainer>
                     <InnerContainer>
@@ -80,11 +81,11 @@ const Login = () => {
                         />
                     </InnerContainer>
                 </InputContainer>
-                    <ButtonFunction text="로그인" onClick={handleSubmit} />
+                    <ButtonFunction text="Login" onClick={handleSubmit} />
                 </Form>
                 <SignUpLink>
-                    계정이 없으신가요?
-                    <a href="/signup">회원가입</a>
+                    No account?
+                    <a href="/sign-up">Sign Up</a>
                 </SignUpLink>
             </Container>
         </Background>
