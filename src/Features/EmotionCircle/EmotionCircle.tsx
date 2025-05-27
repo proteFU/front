@@ -216,12 +216,6 @@ const EmotionCircle: React.FC<CircleSectionProps> = ({ colors = [], sections = 0
                     objectFit: 'cover'
                 }} 
             />
-            <button 
-                css={continueButtonStyle}
-                onClick={handleClick}
-            >
-                Continue
-            </button>
         </div>
     );
 };

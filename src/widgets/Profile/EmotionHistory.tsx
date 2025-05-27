@@ -10,6 +10,8 @@ import {
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
 import { container, card } from "../../Shared/UI/common";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 ChartJS.register(
     RadialLinearScale,
@@ -38,6 +40,8 @@ const ChartContainer = styled.div`
 `;
 
 const EmotionHistory = () => {
+    const [chartData, setChartData] = useState<number[]>([]);
+
     const data = {
         labels: [
             'Happy',
@@ -51,9 +55,9 @@ const EmotionHistory = () => {
         ],
         datasets: [
             {
-                data: [3, 0, 1, 2, 3, 4, 5, 6],
+                data: chartData,
                 fill: true,
-                backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
                 borderColor: 'rgba(125, 46, 238, 1)',
                 pointBackgroundColor: 'rgba(124, 46, 238, 0.2)',
                 pointBorderColor: '#fff',
@@ -79,7 +83,7 @@ const EmotionHistory = () => {
                 pointLabels: {
                     display: true,
                     font: {
-                        size: 10,
+                        size: 14,
                         family: 'Pretendard'
                     },
                     color: '#FFF',
@@ -93,6 +97,20 @@ const EmotionHistory = () => {
             }
         }
     };
+
+    const getEmotionHistory = async () => {
+        try {
+            const response = await axios.get('https://lazy-shaylah-guhyunwoo-777b581b.koyeb.app/emotions');
+            const emotionData = Object.values(response.data.emotionList) as number[];
+            setChartData(emotionData);
+        } catch (error) {
+            console.error('감정 데이터를 불러오는데 실패했습니다:', error);
+        }
+    }
+
+    useEffect(() => {
+        getEmotionHistory();
+    }, []);
 
     return (
         <Container>
