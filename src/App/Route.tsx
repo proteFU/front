@@ -68,11 +68,11 @@ export const router = createBrowserRouter([
     },
     {
         path: "/login",
-        element: <Login />,
+        element: withGNB(Login),
     },
     {
-        path: "/signup",
-        element: <SignUp />,
+        path: "/sign-up",
+        element: withGNB(SignUp),
     },
     {
         path: "*",
