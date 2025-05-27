@@ -1,4 +1,3 @@
-
 import { RouterProvider } from "react-router-dom";
 import { router } from "./Route";
 import styled from "@emotion/styled";
