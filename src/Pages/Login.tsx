@@ -63,7 +63,7 @@ const Login = () => {
     return (
         <Background>
             <Container>
-                <HeadText text="Login" img={Cancel}/>
+                <HeadText text="Login" img={Cancel} onClick={() => navigate(-1)}/>
                 <Form>
                 <InputContainer>
                     <InnerContainer>
