@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import ArrowRight from "../../assets/다음.svg";
 import { container } from "../../Shared/UI/common";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useProfileStore from "../../Entites/Store/profileStore";
 
 const Container = styled.div`
@@ -55,6 +55,15 @@ const NameText = styled.p`
     line-height: normal;
 `;
 
+const LoginText = styled.p`
+    color: #FFF;
+    font-family: Pretendard;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+`;
+
 const ArrowIcon = styled.img`
     width: 24px;
     height: 24px;
@@ -64,13 +73,22 @@ const ArrowIcon = styled.img`
 const ProfileCard = () => {
     const navigate = useNavigate();
     const { profile, isLoading, error, fetchProfile } = useProfileStore();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     
     useEffect(() => {
-        fetchProfile();
+        const token = localStorage.getItem('token');
+        if (token) {
+            setIsLoggedIn(true);
+            fetchProfile();
+        }
     }, [fetchProfile]);
     
     const handleClick = () => {
-        navigate("/profile/edit");
+        if (isLoggedIn) {
+            navigate("/profile/edit");
+        } else {
+            navigate("/login");
+        }
     };
     
     if (isLoading) {
@@ -85,11 +103,17 @@ const ProfileCard = () => {
         <Container onClick={handleClick}>
             <Card>
                 <CardContainer>
-                    <ImageContainer 
-                        src={profile?.profileImageUrl || "https://placehold.co/60x60"} 
-                        alt="profile" 
-                    />
-                    <NameText>{profile?.username || "사용자"}</NameText>
+                    {isLoggedIn ? (
+                        <>
+                            <ImageContainer 
+                                src={profile?.profileImageUrl || "https://placehold.co/60x60"} 
+                                alt="profile" 
+                            />
+                            <NameText>{profile?.username || "사용자"}</NameText>
+                        </>
+                    ) : (
+                        <LoginText>로그인하고 프로필을 확인하세요</LoginText>
+                    )}
                 </CardContainer>
                 <ArrowIcon src={ArrowRight} alt="arrow-right" />
             </Card>
