@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
+import React, { useState } from 'react';
 import { css } from '@emotion/react';
 
 // 이미지 import
@@ -92,7 +92,8 @@ const glowStyle = css`
     box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
 `;
 
-const EmotionCircle: React.FC<CircleSectionProps> = ({ colors = [], sections = 0, selectedEmotions, isClicked = false }) => {
+const EmotionCircle = () => {
+    const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
     const centerX = 50; // 중심 좌표
     const centerY = 50; // 중심 좌표
     const innerRadius = 37; // 내부 채워지는 영역의 반지름
@@ -106,7 +107,7 @@ const EmotionCircle: React.FC<CircleSectionProps> = ({ colors = [], sections = 0
 
     return (
         <div css={CircleContainer}>
-            {isClicked && <div css={[glowStyle, GlowEffect]} />}
+            {selectedEmotion && <div css={[glowStyle, GlowEffect]} />}
             <svg css={Circle} viewBox="0 0 100 100">
                 {/* 가장 바깥쪽 흰색 블러 스트로크 원 */}
                 <circle
