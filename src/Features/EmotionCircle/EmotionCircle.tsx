@@ -104,6 +104,27 @@ const EmotionCircle: React.FC<CircleSectionProps> = ({ colors = [], sections = 0
     const distanceIncreasePerSection = 1.2; // 개수 늘어날 때마다 거리 늘어나는 양
     const minInnerCircleRadius = 1; // 최소 반지름
 
+    const continueButtonStyle = css`
+        position: absolute;
+        bottom: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: none;
+        border: none;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        padding: 8px 20px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+        z-index: 4;
+    `;
+
+    const handleClick = () => {
+        console.log('버튼이 클릭되었습니다');
+        console.log(true);
+    };
+
     return (
         <div css={CircleContainer}>
             {isClicked && <div css={[glowStyle, GlowEffect]} />}

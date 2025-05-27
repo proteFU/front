@@ -2,32 +2,33 @@ import styled from "@emotion/styled";
 import ArrowRight from "../../assets/다음.svg";
 import { container } from "../../Shared/UI/common";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import useProfileStore from "../../Entites/Store/profileStore";
 
 const Container = styled.div`
     ${container}
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    
     &:hover {
-        cursor: pointer;
-        scale: 1.01;
-        transition: scale 0.3s ease-in-out;
+        transform: scale(1.01);
     }
+    
     &:active {
-        opacity: 0.5;
-        scale: 0.99;
-        transition: scale 0.3s ease-in-out;
+        opacity: 0.8;
+        transform: scale(0.99);
     }
 `;
 
-
 const Card = styled.div`
     display: flex;
-    padding: 4px 12px;
+    padding: 16px;
     justify-content: space-between;
     align-items: center;
     align-self: stretch;
-    border-radius: 8px;
+    border-radius: 12px;
     background: rgba(255, 255, 255, 0.20);
     backdrop-filter: blur(2px);
-    margin-bottom: 16px;
     width: 100%;
     box-sizing: border-box;
 `;
@@ -35,18 +36,18 @@ const Card = styled.div`
 const CardContainer = styled.div`
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
 `;
 
 const ImageContainer = styled.img`
     width: 60px;
     height: 60px;
     border-radius: 50%;
+    object-fit: cover;
 `;
 
 const NameText = styled.p`
     color: #FFF;
-    text-align: center;
     font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
@@ -54,24 +55,46 @@ const NameText = styled.p`
     line-height: normal;
 `;
 
+const ArrowIcon = styled.img`
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease-in-out;
+`;
+
 const ProfileCard = () => {
-    const name = "김철수";
-    const profile = "https://placehold.co/60x60";
     const navigate = useNavigate();
+    const { profile, isLoading, error, fetchProfile } = useProfileStore();
+    
+    useEffect(() => {
+        fetchProfile();
+    }, [fetchProfile]);
+    
+    const handleClick = () => {
+        navigate("/profile/edit");
+    };
+    
+    if (isLoading) {
+        return <Container>로딩 중...</Container>;
+    }
+    
+    if (error) {
+        return <Container>에러: {error}</Container>;
+    }
     
     return (
-        <Container onClick={() => navigate("/profile/edit")}>
+        <Container onClick={handleClick}>
             <Card>
                 <CardContainer>
-                    <ImageContainer src={profile} />
-                <NameText>
-                    {name}
-                </NameText>
-            </CardContainer>
-                <img src={ArrowRight} alt="arrow-right" />
+                    <ImageContainer 
+                        src={profile?.profileImageUrl || "https://placehold.co/60x60"} 
+                        alt="profile" 
+                    />
+                    <NameText>{profile?.username || "사용자"}</NameText>
+                </CardContainer>
+                <ArrowIcon src={ArrowRight} alt="arrow-right" />
             </Card>
         </Container>
-    )
-}
+    );
+};
 
 export default ProfileCard;
