@@ -80,6 +80,8 @@ const ProfileCard = () => {
         if (token) {
             setIsLoggedIn(true);
             fetchProfile();
+        } else {
+            setIsLoggedIn(false);
         }
     }, [fetchProfile]);
     
@@ -90,6 +92,19 @@ const ProfileCard = () => {
             navigate("/login");
         }
     };
+    
+    if (!isLoggedIn) {
+        return (
+            <Container onClick={handleClick}>
+                <Card>
+                    <CardContainer>
+                        <LoginText>로그인하고 프로필을 확인하세요</LoginText>
+                    </CardContainer>
+                    <ArrowIcon src={ArrowRight} alt="arrow-right" />
+                </Card>
+            </Container>
+        );
+    }
     
     if (isLoading) {
         return <Container>로딩 중...</Container>;
@@ -103,17 +118,11 @@ const ProfileCard = () => {
         <Container onClick={handleClick}>
             <Card>
                 <CardContainer>
-                    {isLoggedIn ? (
-                        <>
-                            <ImageContainer 
-                                src={profile?.profileImageUrl || "https://placehold.co/60x60"} 
-                                alt="profile" 
-                            />
-                            <NameText>{profile?.username || "사용자"}</NameText>
-                        </>
-                    ) : (
-                        <LoginText>로그인하고 프로필을 확인하세요</LoginText>
-                    )}
+                    <ImageContainer 
+                        src={profile?.profileImageUrl || "https://placehold.co/60x60"} 
+                        alt="profile" 
+                    />
+                    <NameText>{profile?.username || "사용자"}</NameText>
                 </CardContainer>
                 <ArrowIcon src={ArrowRight} alt="arrow-right" />
             </Card>
