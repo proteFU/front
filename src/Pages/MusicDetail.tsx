@@ -116,6 +116,9 @@ const LyricLine = styled.div<{ isHighlight?: boolean }>`
     margin-bottom: 8px;
     color: ${props => (props.isHighlight ? '#FFF' : 'rgba(255, 255, 255, 0.5)')};
     font-weight: ${props => (props.isHighlight ? '500' : 'normal')};
+    transition: all 0.5s ease-in-out;
+    opacity: ${props => (props.isHighlight ? 1 : 0.5)};
+    transform: ${props => (props.isHighlight ? 'scale(1.02)' : 'scale(1)')};
 `;
 
 const PlayBarWrapper = styled.div`
@@ -151,13 +154,14 @@ const MusicDetail = () => {
     const [isLiked] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [highlightIndex, setHighlightIndex] = useState(0);
     const totalDuration = 210;
 
     useEffect(() => {
-        let interval: number;
+        let playInterval: number;
 
         if (isPlaying) {
-            interval = window.setInterval(() => {
+            playInterval = window.setInterval(() => {
                 setCurrentTime(prev => {
                     if (prev >= totalDuration) {
                         setIsPlaying(false);
@@ -165,24 +169,30 @@ const MusicDetail = () => {
                     }
                     return prev + 1;
                 });
+
+                setHighlightIndex(prev => {
+                    if (prev < lyrics.length - 1) {
+                        return prev + 1;
+                    }
+                    return prev;
+                });
             }, 1000);
         }
 
         return () => {
-            if (interval) clearInterval(interval);
+            if (playInterval) clearInterval(playInterval);
         };
-    }, [isPlaying, totalDuration]);
-    
+    }, [isPlaying]);
 
     async function toggleLike() {
-      try {
-        const response = await axios.post('/api/songs/likes', {
-
-        });
-        console.log('좋아요 성공', response.data);
-      } catch (error) {
-        console.error('좋아요 요청 실패:', error);
-      }
+        try {
+            const response = await axios.post('/api/songs/likes', {
+                // 필요한 payload 추가
+            });
+            console.log('좋아요 성공', response.data);
+        } catch (error) {
+            console.error('좋아요 요청 실패:', error);
+        }
     }
 
     const handlePlayPause = (playing: boolean) => {
@@ -213,7 +223,7 @@ const MusicDetail = () => {
                         {lyrics.map((lyric, index) => (
                             <LyricLine 
                                 key={index} 
-                                isHighlight={index === 1}
+                                isHighlight={index === highlightIndex}
                             >
                                 {lyric}
                             </LyricLine>

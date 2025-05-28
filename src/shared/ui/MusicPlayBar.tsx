@@ -3,14 +3,20 @@ import left from "../../assets/left.png";
 import right from "../../assets/right.png";
 import play from "../../assets/ing.png";
 import pause from "../../assets/stop.png";
+import { useRef, useState, useEffect } from "react";
+
 interface MusicPlayBarProps {
     isPlaying: boolean;
     onPlayPause: (playing: boolean) => void;
     currentTime: number;
     totalDuration: number;
+    onSeek?: (time: number) => void;
 }
 
 const Wrapper = styled.div`
+    position: relative;  /* 애니메이션 위에 표시하도록 */
+    z-index: 10;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,6 +31,7 @@ const ProgressBar = styled.div`
     border-radius: 3px;
     margin-bottom: 8px;
     cursor: pointer;
+    position: relative;
 `;
 
 const Progress = styled.div<{ progress: number }>`
@@ -64,7 +71,7 @@ const ControlButton = styled.button`
     img {
         width: 32px;
         height: 32px;
-        opacity: 0.;
+        opacity: 0.8;
         transition: opacity 0.2s;
 
         &:hover {
@@ -73,7 +80,10 @@ const ControlButton = styled.button`
     }
 `;
 
-const MusicPlayBar = ({ isPlaying, onPlayPause, currentTime, totalDuration }: MusicPlayBarProps) => {
+const MusicPlayBar = ({ isPlaying, onPlayPause, currentTime, totalDuration, onSeek }: MusicPlayBarProps) => {
+    const progressBarRef = useRef<HTMLDivElement>(null);
+    const [isDragging, setIsDragging] = useState(false);
+
     const formatTime = (seconds: number) => {
         const minutes = Math.floor(seconds / 60);
         const remainingSeconds = Math.floor(seconds % 60);
@@ -82,9 +92,49 @@ const MusicPlayBar = ({ isPlaying, onPlayPause, currentTime, totalDuration }: Mu
 
     const progress = (currentTime / totalDuration) * 100;
 
+    const calculateTime = (clientX: number) => {
+        if (!progressBarRef.current) return 0;
+        const rect = progressBarRef.current.getBoundingClientRect();
+        let relativeX = clientX - rect.left;
+        if (relativeX < 0) relativeX = 0;
+        if (relativeX > rect.width) relativeX = rect.width;
+        const percent = relativeX / rect.width;
+        return percent * totalDuration;
+    };
+
+    const handlePointerDown = (e: React.MouseEvent<HTMLDivElement>) => {
+        setIsDragging(true);
+        const time = calculateTime(e.clientX);
+        if (onSeek) onSeek(time);
+    };
+
+    const handlePointerMove = (e: MouseEvent) => {
+        if (!isDragging) return;
+        const time = calculateTime(e.clientX);
+        if (onSeek) onSeek(time);
+    };
+
+    const handlePointerUp = () => {
+        setIsDragging(false);
+    };
+
+    useEffect(() => {
+        if (isDragging) {
+            window.addEventListener("mousemove", handlePointerMove);
+            window.addEventListener("mouseup", handlePointerUp);
+        } else {
+            window.removeEventListener("mousemove", handlePointerMove);
+            window.removeEventListener("mouseup", handlePointerUp);
+        }
+        return () => {
+            window.removeEventListener("mousemove", handlePointerMove);
+            window.removeEventListener("mouseup", handlePointerUp);
+        };
+    }, );
+
     return (
         <Wrapper>
-            <ProgressBar>
+            <ProgressBar ref={progressBarRef} onMouseDown={handlePointerDown}>
                 <Progress progress={progress} />
             </ProgressBar>
             <TimeInfo>
