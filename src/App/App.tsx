@@ -1,6 +1,7 @@
 import { RouterProvider } from "react-router-dom";
 import { router } from "./Route";
 import styled from "@emotion/styled";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const AppContainer = styled.div`
     width: 100%;
@@ -8,11 +9,15 @@ const AppContainer = styled.div`
     position: relative;
 `;
 
+const queryClient = new QueryClient();
+
 const App = () => {
   return (
-    <AppContainer>
-      <RouterProvider router={router} />
-    </AppContainer>
+    <QueryClientProvider client={queryClient}>
+      <AppContainer>
+        <RouterProvider router={router} />
+      </AppContainer>
+    </QueryClientProvider>
   );
 };
 

@@ -9,8 +9,13 @@ import {
     Legend
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
+<<<<<<< HEAD
 import { container, card } from "../../shared/ui/common";
 import axios from "axios";
+=======
+import { container, card } from "../../Shared/UI/common";
+import api from "../../api/axios";
+>>>>>>> 2f19b89e8e9378e79538fa52aab6cd3637cf5998
 import { useEffect, useState } from "react";
 
 ChartJS.register(
@@ -100,7 +105,7 @@ const EmotionHistory = () => {
 
     const getEmotionHistory = async () => {
         try {
-            const response = await axios.get('https://lazy-shaylah-guhyunwoo-777b581b.koyeb.app/emotions');
+            const response = await api.get('/emotions');
             const emotionData = Object.values(response.data.emotionList) as number[];
             setChartData(emotionData);
         } catch (error) {

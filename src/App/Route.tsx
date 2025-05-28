@@ -8,7 +8,13 @@ import Home from '../Pages/Home';
 import ChooseEmotion from '../Pages/ChooseEmotion';
 import Login from "../Pages/Login";
 import SignUp from "../Pages/SignUp";
+<<<<<<< HEAD
 import GNB from '../shared/ui/GNB';
+=======
+import Favorite from '../Pages/Favorite';
+import playList from '../Pages/PlayList';
+import GNB from '../Shared/UI/GNB';
+>>>>>>> 2f19b89e8e9378e79538fa52aab6cd3637cf5998
 import styled from "@emotion/styled";
 
 const PageContainer = styled.div`
@@ -65,6 +71,14 @@ export const router = createBrowserRouter([
     {
         path: "/choose-emotion",
         element: withGNB(ChooseEmotion),
+    },
+    {
+        path: "/favorite",
+        element: withGNB(Favorite)
+    },
+    {
+        path: "/playlist",
+        element: withGNB(playList)
     },
     {
         path: "/login",

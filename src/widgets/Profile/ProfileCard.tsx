@@ -1,131 +1,110 @@
+<<<<<<< HEAD
 import styled from "@emotion/styled";
 import ArrowRight from "../../assets/다음.svg";
 import { container } from "../../shared/ui/common";
 import { useNavigate } from "react-router-dom";
+=======
+>>>>>>> 2f19b89e8e9378e79538fa52aab6cd3637cf5998
 import { useEffect, useState } from "react";
-import useProfileStore from "../../Entites/Store/profileStore";
+import { useNavigate } from "react-router-dom";
+import Container from "./Container";
+import ButtonFunction from "../../Shared/UI/Button";
+import styled from "@emotion/styled";
+import api from "../../api/axios";
 
-const Container = styled.div`
-    ${container}
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    
-    &:hover {
-        transform: scale(1.01);
-    }
-    
-    &:active {
-        opacity: 0.8;
-        transform: scale(0.99);
-    }
-`;
+interface ProfileData {
+    username: string;
+    email: string;
+    profileImageUrl: string;
+}
 
-const Card = styled.div`
+const LoginPrompt = styled.div`
     display: flex;
-    padding: 16px;
-    justify-content: space-between;
-    align-items: center;
-    align-self: stretch;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.20);
-    backdrop-filter: blur(2px);
-    width: 100%;
-    box-sizing: border-box;
-`;
-
-const CardContainer = styled.div`
-    display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 16px;
+    padding: 32px;
 `;
 
-const ImageContainer = styled.img`
-    width: 60px;
-    height: 60px;
+const LoginText = styled.p`
+    color: white;
+    font-size: 16px;
+`;
+
+const ProfileInfo = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 32px;
+`;
+
+const ProfileImage = styled.img`
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
 `;
 
-const NameText = styled.p`
-    color: #FFF;
-    font-family: Pretendard;
+const ProfileName = styled.h2`
+    color: white;
     font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+    margin: 0;
 `;
 
-const LoginText = styled.p`
-    color: #FFF;
-    font-family: Pretendard;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-`;
-
-const ArrowIcon = styled.img`
-    width: 24px;
-    height: 24px;
-    transition: transform 0.3s ease-in-out;
+const ProfileEmail = styled.p`
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 16px;
+    margin: 0;
 `;
 
 const ProfileCard = () => {
     const navigate = useNavigate();
-    const { profile, isLoading, error, fetchProfile } = useProfileStore();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [profileData, setProfileData] = useState<ProfileData | null>(null);
+
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setIsLoggedIn(true);
-            fetchProfile();
-        } else {
-            setIsLoggedIn(false);
-        }
-    }, [fetchProfile]);
-    
-    const handleClick = () => {
-        if (isLoggedIn) {
-            navigate("/profile/edit");
-        } else {
-            navigate("/login");
-        }
-    };
-    
+        const checkLoginStatus = async () => {
+            try {
+                const response = await api.get('/users/profile');
+                console.log('프로필 데이터:', response.data);
+                setProfileData(response.data);
+                setIsLoggedIn(true);
+            } catch (error: any) {
+                console.log('프로필 조회 에러:', error);
+                if (error.response?.status === 401) {
+                    setIsLoggedIn(false);
+                } else {
+                    console.error('프로필 조회 중 오류 발생:', error);
+                }
+            }
+        };
+        checkLoginStatus();
+    }, []);
+
     if (!isLoggedIn) {
         return (
-            <Container onClick={handleClick}>
-                <Card>
-                    <CardContainer>
-                        <LoginText>로그인하고 프로필을 확인하세요</LoginText>
-                    </CardContainer>
-                    <ArrowIcon src={ArrowRight} alt="arrow-right" />
-                </Card>
+            <Container>
+                <LoginPrompt>
+                    <LoginText>로그인이 필요합니다</LoginText>
+                    <ButtonFunction text="로그인하기" onClick={() => navigate('/login')} />
+                </LoginPrompt>
             </Container>
         );
     }
-    
-    if (isLoading) {
-        return <Container>로딩 중...</Container>;
-    }
-    
-    if (error) {
-        return <Container>에러: {error}</Container>;
-    }
-    
+
     return (
-        <Container onClick={handleClick}>
-            <Card>
-                <CardContainer>
-                    <ImageContainer 
-                        src={profile?.profileImageUrl || "https://placehold.co/60x60"} 
-                        alt="profile" 
+        <Container>
+            {profileData && (
+                <ProfileInfo>
+                    <ProfileImage 
+                        src={profileData.profileImageUrl || "https://placehold.co/120x120"} 
+                        alt="프로필 이미지" 
                     />
-                    <NameText>{profile?.username || "사용자"}</NameText>
-                </CardContainer>
-                <ArrowIcon src={ArrowRight} alt="arrow-right" />
-            </Card>
+                    <ProfileName>{profileData.username}</ProfileName>
+                    <ProfileEmail>{profileData.email}</ProfileEmail>
+                </ProfileInfo>
+            )}
         </Container>
     );
 };
