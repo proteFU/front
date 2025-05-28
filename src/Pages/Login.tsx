@@ -74,9 +74,10 @@ const Login = () => {
         onSuccess: async (data) => {
             console.log('로그인 성공:', data);
             try {
-                const profileResponse = await api.get('/users/profile');
+                const profileResponse = await api.get('/users/profile', {
+                    withCredentials: true
+                });
                 console.log('프로필 정보:', profileResponse.data);
-                console.log('로그인 성공 후 쿠키:', document.cookie);
                 alert('로그인되었습니다.');
                 navigate('/', { replace: true });
             } catch (error) {
