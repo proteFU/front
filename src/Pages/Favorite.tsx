@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import PlayListThumbnail from '../Shared/PlayListTumbnaill/PlayListThumbnail.tsx';
 import SongThumbnaill from '../Shared/SongTumbnaill/SongThumbnaill.tsx';
-// import NavigateBar from './NavigateBar';
 import background from '../assets/background.svg';
 import { PlayListThumbnailData } from './dummy.tsx';
 import { SongThumbnaillData } from './dummy.tsx';

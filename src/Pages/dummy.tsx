@@ -19,7 +19,7 @@ export const PlayListThumbnailData : PlayListThumbnailProps[] = [
 ]
 
 export const SongThumbnaillData : SongThumbnaillProps[] = [
-  {img : img1, title : '휘바람', artists : 'dl문세'},
+  {img : img1, title : '휘바람', artists : '이문세'},
   {img : img2, title : '최종화', artists : '아이리 칸나'},
   {img : img3, title : '여로', artists : '아라하시 타비'},
   {img : img4, title : '내꺼하는법', artists : '아야츠노 유니'},
