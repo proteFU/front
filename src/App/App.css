@@ -14,7 +14,7 @@
     position: absolute;
     width: 393px;
     height: 852px;
-    background-image: url('/songBG.png'); /* public 루트 기준 경로 */
+    background-image: url('/public/songBG.svg'); 
     background-size: cover;
     background-position: center;
     opacity: 0.3;
