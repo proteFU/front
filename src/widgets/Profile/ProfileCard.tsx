@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import Container from "./Container";
 import ButtonFunction from "../../Shared/UI/Button";
 import styled from "@emotion/styled";
-import api from "../../api/axios";
 
 interface ProfileData {
     username: string;
@@ -39,10 +38,11 @@ const ProfileImage = styled.img`
     object-fit: cover;
 `;
 
-const ProfileName = styled.h2`
+const WelcomeMessage = styled.h2`
     color: white;
     font-size: 24px;
-    margin: 0;
+    text-align: center;
+    margin: 20px 0;
 `;
 
 const ProfileEmail = styled.p`
@@ -57,22 +57,14 @@ const ProfileCard = () => {
     const [profileData, setProfileData] = useState<ProfileData | null>(null);
 
     useEffect(() => {
-        const checkLoginStatus = async () => {
-            try {
-                const response = await api.get('/users/profile');
-                console.log('프로필 데이터:', response.data);
-                setProfileData(response.data);
-                setIsLoggedIn(true);
-            } catch (error: any) {
-                console.log('프로필 조회 에러:', error);
-                if (error.response?.status === 401) {
-                    setIsLoggedIn(false);
-                } else {
-                    console.error('프로필 조회 중 오류 발생:', error);
-                }
-            }
-        };
-        checkLoginStatus();
+        const savedUser = localStorage.getItem('user');
+        const loginStatus = localStorage.getItem('isLoggedIn');
+        
+        if (savedUser && loginStatus === 'true') {
+            const user = JSON.parse(savedUser);
+            setProfileData(user);
+            setIsLoggedIn(true);
+        }
     }, []);
 
     if (!isLoggedIn) {
@@ -94,7 +86,7 @@ const ProfileCard = () => {
                         src={profileData.profileImageUrl || "https://placehold.co/120x120"} 
                         alt="프로필 이미지" 
                     />
-                    <ProfileName>{profileData.username}</ProfileName>
+                    <WelcomeMessage>{profileData.username}님, 환영합니다!</WelcomeMessage>
                     <ProfileEmail>{profileData.email}</ProfileEmail>
                 </ProfileInfo>
             )}

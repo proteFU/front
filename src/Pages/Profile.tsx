@@ -7,9 +7,27 @@ import EmotionHistory from "../widgets/Profile/EmotionHistory";
 import HistoryCard from "../widgets/Profile/HistoryCard";
 import { playlists } from "../Entites/Dummy";
 import { useState } from "react";
+import ButtonFunction from "../Shared/UI/Button";
+import { useNavigate } from "react-router-dom";
 
 const Background = styled.div`
     ${background}
+    height: 100%;
+    overflow-y: scroll;
+    padding-bottom: 100px;
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
 `;
 
 const ShareModal = styled.div`
@@ -68,6 +86,7 @@ const CloseButton = styled(ShareButton)`
 `;
 
 const Profile = () => {
+    const navigate = useNavigate();
     const [shareModal, setShareModal] = useState(false);
     const [selectedPlaylist, setSelectedPlaylist] = useState<typeof playlists[0] | null>(null);
 
@@ -88,11 +107,19 @@ const Profile = () => {
         alert("카카오 공유 기능 준비 중입니다.");
     };
 
+    const handleLogout = async () => {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        localStorage.removeItem('user');
+        localStorage.removeItem('isLoggedIn');
+        navigate('/login');
+    };
+
     return (
         <Background>
             <Container>
                 <HeadText text="Profile" />
                 <ProfileCard/>
+                <ButtonFunction text="로그아웃" onClick={handleLogout} />
                 <HeadText text="My Mood Lately" />
                 <EmotionHistory />
                 <HeadText text="History" />

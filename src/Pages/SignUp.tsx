@@ -1,14 +1,12 @@
 import styled from "@emotion/styled";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { background } from "../Shared/UI/common";
 import Container from "../widgets/Profile/Container";
 import HeadText from "../Shared/UI/HeadText";
 import { InputContainer, InnerContainer, InputLabel, StyledInput } from "../Shared/UI/Input";
 import ButtonFunction from "../Shared/UI/Button";
-import api from "../api/axios";
 import Cancel from "../assets/취소.svg";
-import { useMutation } from '@tanstack/react-query';
 
 const Background = styled.div`
     ${background}
@@ -20,32 +18,6 @@ const Form = styled.form`
     gap: 16px;
     margin-top: 44px;
     padding: 0 16px;
-`;
-
-const ImageUploadContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 16px;
-`;
-
-const ProfileImage = styled.img`
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    cursor: pointer;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease-in-out;
-
-    &:hover {
-        border-color: #6425BE;
-    }
-`;
-
-const ImageInput = styled.input`
-    display: none;
 `;
 
 const LoginLink = styled.p`
@@ -69,41 +41,33 @@ const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [profileImage, setProfileImage] = useState<string>("");
-    const fileInputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
 
-    const signupMutation = useMutation({
-        mutationFn: async (formData: { username: string; password: string; email: string; profileImageUrl: string }) => {
-            const response = await api.post('/users/sign-up', formData);
-            return response.data;
-        },
-        onSuccess: () => {
-            alert('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
-            navigate('/login');
-        },
-        onError: (error) => {
-            alert('회원가입에 실패했습니다.');
-            console.error('Signup error:', error);
-        }
-    });
-
-    const handleImageClick = () => {
-        fileInputRef.current?.click();
-    };
-
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setProfileImage(reader.result as string);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
     const handleSubmit = () => {
+        if (!username || !email || !password || !confirmPassword) {
+            alert('모든 필드를 입력해주세요.');
+            return;
+        }
+        if (password !== confirmPassword) {
+            alert('비밀번호가 일치하지 않습니다.');
+            return;
+        }
+
+        // 임시 회원가입 처리
+        const mockUser = {
+            email: email,
+            username: username,
+            profileImageUrl: "https://placehold.co/60x60"
+        };
+
+        // 로컬 스토리지에 사용자 정보 저장
+        localStorage.setItem('user', JSON.stringify(mockUser));
+        localStorage.setItem('isLoggedIn', 'true');
+
+        alert('회원가입이 완료되었습니다.');
+        navigate('/', { replace: true });
+
+        /* API 회원가입 로직 (주석 처리)
         const formData = {
             username,
             password,
@@ -119,55 +83,52 @@ const SignUp = () => {
             alert('회원가입에 실패했습니다.');
             console.error('Signup error:', signupMutation.error);
         }
+        */
     };
 
     return (
         <Background>
             <Container>
                 <HeadText text="Sign Up" img={Cancel} onClick={() => navigate(-1)}/>
-                <Form>
-                    <ImageUploadContainer>
-                        <ProfileImage 
-                            src={profileImage} 
-                            alt="프로필 이미지" 
-                            onClick={handleImageClick}
-                        />
-                        <ImageInput
-                            type="file"
-                            ref={fileInputRef}
-                            onChange={handleImageChange}
-                            accept="image/*"
-                        />
-                    </ImageUploadContainer>
+                <Form onSubmit={handleSubmit}>
                     <InputContainer>
                         <InnerContainer>
                             <InputLabel>Name</InputLabel>
                             <StyledInput 
-                                placeholder={username} 
+                                name="username"
+                                type="text"
+                                autoComplete="name"
+                                value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                             />
                         </InnerContainer>
                         <InnerContainer>
                             <InputLabel>Email</InputLabel>
                             <StyledInput 
+                                name="email"
                                 type="email"
-                                placeholder={email} 
+                                autoComplete="email"
+                                value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </InnerContainer>
                         <InnerContainer>
                             <InputLabel>Password</InputLabel>
                             <StyledInput 
+                                name="password"
                                 type="password"
-                                placeholder={password} 
+                                autoComplete="new-password"
+                                value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </InnerContainer>
                         <InnerContainer>
-                            <InputLabel>Password Check</InputLabel>
+                            <InputLabel>Confirm Password</InputLabel>
                             <StyledInput 
+                                name="confirmPassword"
                                 type="password"
-                                placeholder={confirmPassword} 
+                                autoComplete="new-password"
+                                value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                             />
                         </InnerContainer>
