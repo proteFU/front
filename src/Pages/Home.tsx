@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import HeadText from '../Shared/UI/HeadText';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { background } from '../Shared/UI/common';
 import { playlists } from '../Entites/Dummy';
+import api from '../api/axios';
 
 const Background = styled.div`
   ${background}
@@ -86,19 +86,31 @@ const Home = () => {
   const [userProfileImage, setUserProfileImage] = useState<string>("");
 
   const getRecommendPlaylist = async () => {
-    const response = await axios.get("https://lazy-shaylah-guhyunwoo-777b581b.koyeb.app/playlist/recommend");
-    console.log(response.data);
+    try {
+      const response = await api.get("/playlist/recommend");
+      console.log('추천 플레이리스트:', response.data);
+    } catch (error) {
+      console.error('추천 플레이리스트 조회 실패:', error);
+    }
   }
 
   const getRecommendMusic = async () => {
-    const response = await axios.get("https://lazy-shaylah-guhyunwoo-777b581b.koyeb.app/music/recommend");
-    console.log(response.data);
+    try {
+      const response = await api.get("/music/recommend");
+      console.log('추천 음악:', response.data);
+    } catch (error) {
+      console.error('추천 음악 조회 실패:', error);
+    }
   }
 
   const getUserProfileImage = async () => {
-    const response = await axios.get("https://lazy-shaylah-guhyunwoo-777b581b.koyeb.app/user/profile");
-    console.log(response.data);
-    setUserProfileImage(response.data.profileImageUrl);
+    try {
+      const response = await api.get("/users/profile");
+      console.log('프로필 정보:', response.data);
+      setUserProfileImage(response.data.profileImageUrl);
+    } catch (error) {
+      console.error('프로필 정보 조회 실패:', error);
+    }
   }
 
   useEffect(() => {

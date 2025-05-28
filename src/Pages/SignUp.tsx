@@ -6,7 +6,7 @@ import Container from "../widgets/Profile/Container";
 import HeadText from "../Shared/UI/HeadText";
 import { InputContainer, InnerContainer, InputLabel, StyledInput } from "../Shared/UI/Input";
 import ButtonFunction from "../Shared/UI/Button";
-import axios from "axios";
+import api from "../api/axios";
 import Cancel from "../assets/취소.svg";
 import { useMutation } from '@tanstack/react-query';
 
@@ -75,7 +75,7 @@ const SignUp = () => {
 
     const signupMutation = useMutation({
         mutationFn: async (formData: { username: string; password: string; email: string; profileImageUrl: string }) => {
-            const response = await axios.post('https://lazy-shaylah-guhyunwoo-777b581b.koyeb.app/users/sign-up', formData);
+            const response = await api.post('/users/sign-up', formData);
             return response.data;
         },
         onSuccess: () => {
