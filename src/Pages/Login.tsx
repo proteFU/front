@@ -6,7 +6,6 @@ import Container from "../widgets/Profile/Container";
 import HeadText from "../Shared/UI/HeadText";
 import { InputContainer, InnerContainer, InputLabel, StyledInput } from "../Shared/UI/Input";
 import ButtonFunction from "../Shared/UI/Button";
-import axios from "axios";
 import Cancel from "../assets/취소.svg";
 import { useMutation } from '@tanstack/react-query';
 import api from "../api/axios";
@@ -48,19 +47,14 @@ const Login = () => {
         mutationFn: async (formData: { username: string; password: string }) => {
             console.log('로그인 시도:', formData);
             try {
-                const response = await axios.post('https://lazy-shaylah-guhyunwoo-777b581b.koyeb.app/users/login', {
+                const response = await api.post('/users/login', {
                     email: formData.username,
                     password: formData.password
-                }, {
-                    withCredentials: true,
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    }
                 });
                 console.log('로그인 응답:', response);
                 console.log('응답 헤더:', response.headers);
-                console.log('Set-Cookie 헤더:', response.headers['set-cookie']);
+                console.log('전체 응답 헤더:', JSON.stringify(response.headers, null, 2));
+                console.log('현재 쿠키:', document.cookie);
                 return response.data;
             } catch (error: any) {
                 console.log('로그인 에러 발생:', error);
@@ -74,16 +68,31 @@ const Login = () => {
         onSuccess: async (data) => {
             console.log('로그인 성공:', data);
             try {
-                const profileResponse = await api.get('/users/profile', {
-                    withCredentials: true
-                });
+                const profileResponse = await api.get('/users/profile');
                 console.log('프로필 정보:', profileResponse.data);
                 alert('로그인되었습니다.');
                 navigate('/', { replace: true });
-            } catch (error) {
+            } catch (error: any) {
                 console.error('프로필 정보 조회 실패:', error);
-                alert('로그인되었지만 프로필 정보를 가져오는데 실패했습니다.');
-                navigate('/', { replace: true });
+                if (error.response?.status === 404) {
+                    // 프로필이 없는 경우 프로필 생성 요청
+                    try {
+                        const createProfileResponse = await api.post('/users/profile', {
+                            username: email.split('@')[0], // 이메일에서 사용자명 추출
+                            profileImageUrl: "https://placehold.co/60x60" // 기본 이미지
+                        });
+                        console.log('프로필 생성 성공:', createProfileResponse.data);
+                        alert('로그인되었습니다.');
+                        navigate('/', { replace: true });
+                    } catch (createError) {
+                        console.error('프로필 생성 실패:', createError);
+                        alert('로그인되었지만 프로필 생성에 실패했습니다.');
+                        navigate('/', { replace: true });
+                    }
+                } else {
+                    alert('로그인되었지만 프로필 정보를 가져오는데 실패했습니다.');
+                    navigate('/', { replace: true });
+                }
             }
         },
         onError: (error: any) => {

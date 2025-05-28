@@ -14,6 +14,7 @@ import sad from '../assets/Emotion/sad.svg'
 import Button from '../Shared/Button';
 import api from '../Shared/api/axios';
 import { useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
 
 const BackgroundImage = css`
     position: fixed;
@@ -114,17 +115,12 @@ const ChooseEmotion: React.FC = () => {
             return;
         }
 
-        const token = localStorage.getItem('token');
-        if (!token) {
-            alert('로그인이 필요합니다.');
-            navigate('/login');
-            return;
-        }
-
         try {
+            console.log('감정 전송 시도...');
             const response = await api.post('/emotions', {
                 "emotionList": selectedEmotions
             });
+            console.log('감정 전송 응답:', response);
 
             if (response.status === 200) {
                 alert('감정 전달 완료.');
@@ -132,9 +128,25 @@ const ChooseEmotion: React.FC = () => {
             } else {
                 alert('감정 전달 실패.');
             }
-        } catch (error) {
+        } catch (error: unknown) {
             console.error('API Error:', error);
-            alert('감정 전달 실패.');
+            if (error instanceof AxiosError) {
+                console.log('에러 상태:', error.response?.status);
+                console.log('에러 메시지:', error.response?.data);
+                console.log('에러 헤더:', error.response?.headers);
+                
+                if (error.response?.status === 401) {
+                    alert('로그인이 필요합니다.');
+                    navigate('/login');
+                } else if (error.response?.status === 403) {
+                    alert('권한이 없습니다. 다시 로그인해주세요.');
+                    navigate('/login');
+                } else {
+                    alert(`감정 전달 실패: ${error.response?.data?.message || '알 수 없는 오류가 발생했습니다.'}`);
+                }
+            } else {
+                alert('감정 전달 중 오류가 발생했습니다.');
+            }
         }
     };
 

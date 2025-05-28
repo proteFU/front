@@ -3,7 +3,7 @@ import ShareIcon from '../../assets/공유.svg';
 import HamburgerIcon from '../../assets/햄버거.svg';
 import type { HistoryCardProps } from "../../types/Profile/HistoryCardProps";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../api/axios";
 
 const Container = styled.div`
     display: flex;
@@ -118,7 +118,8 @@ const HistoryCard = ({ title, image, createdBy, onShare }: HistoryCardProps) => 
 
     const getPlaylistHistory = async () => {
         try {
-            const response = await axios.get('https://lazy-shaylah-guhyunwoo-777b581b.koyeb.app/songs/likes');
+            const response = await api.get('/songs/likes');
+            console.log('좋아요 목록:', response.data);
             setPlaylistData(response.data);
         } catch (error) {
             console.error("플레이리스트 히스토리 조회 실패", error);
