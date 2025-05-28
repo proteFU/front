@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useState, useEffect } from "react";
-import album from "../assets/album.png";
+import album from "../assets/album.svg";
 import heartIcon from "../assets/heart.svg";
 import MusicPlayBar from "../shared/ui/MusicPlayBar";
 import "../App/App.css";

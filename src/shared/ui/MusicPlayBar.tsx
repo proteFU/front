@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import left from "../../assets/left.png";
-import right from "../../assets/right.png";
-import play from "../../assets/ing.png";
-import pause from "../../assets/stop.png";
+import left from "../../assets/left.svg";
+import right from "../../assets/right.svg";
+import play from "../../assets/ing.svg";
+import pause from "../../assets/stop.svg";
 import { useRef, useState, useEffect } from "react";
 
 interface MusicPlayBarProps {
@@ -14,7 +14,7 @@ interface MusicPlayBarProps {
 }
 
 const Wrapper = styled.div`
-    position: relative;  /* 애니메이션 위에 표시하도록 */
+    position: relative;
     z-index: 10;
 
     display: flex;
@@ -146,7 +146,7 @@ const MusicPlayBar = ({ isPlaying, onPlayPause, currentTime, totalDuration, onSe
                     <img src={left} alt="Previous" />
                 </ControlButton>
                 <ControlButton onClick={() => onPlayPause(!isPlaying)}>
-                    <img src={isPlaying ? play : pause} alt={isPlaying ? "Pause" : "Play"} />
+                    <img src={isPlaying ? play : pause} alt={isPlaying ? "Play" : "Pause"} />
                 </ControlButton>
                 <ControlButton>
                     <img src={right} alt="Next" />

@@ -5,7 +5,6 @@
     height: 852px;
     justify-content: center;
     align-items: center;
-    background-color: black;
     font-family: 'Pretendard-Regular';
     overflow: hidden;
 }
@@ -15,12 +14,11 @@
     position: absolute;
     width: 393px;
     height: 852px;
-    background-image: url('/public/songBG.png');
+    background-image: url('/songBG.png'); /* public 루트 기준 경로 */
     background-size: cover;
     background-position: center;
     opacity: 0.3;
     z-index: 0;
-    justify-items: center;;
 }
 
 #root > * {

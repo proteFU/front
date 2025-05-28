@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
-import back from "../../assets/arrow.png";
+import back from "../../assets/arrow.svg";
 import "../../App/App.css";
 
 const BackButton = styled.button`

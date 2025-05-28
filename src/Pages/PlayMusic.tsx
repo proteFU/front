@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import album from "../assets/album.png";
+import album from "../assets/album.svg";
 import MusicPlayBar from "../shared/ui/MusicPlayBar";
 import BackIcon from "../shared/ui/BackIcon";
 import "../App/App.css";
@@ -160,12 +160,10 @@ const PlayMusic = () => {
         if (prev >= currentSong.duration) {
           clearInterval(interval);
 
-          // 페이드 아웃 시작
           setFadeOut(true);
           setContentFade(true);
 
           setTimeout(() => {
-            // 다음 곡으로 전환
             setCurrentSongIndex((prev) =>
               prev + 1 < songs.length ? prev + 1 : 0
             );
