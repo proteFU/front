@@ -8,6 +8,7 @@ import { InputContainer, InnerContainer, InputLabel, StyledInput } from "../Shar
 import ButtonFunction from "../Shared/UI/Button";
 import axios from "axios";
 import Cancel from "../assets/취소.svg";
+import { useMutation } from '@tanstack/react-query';
 
 const Background = styled.div`
     ${background}
@@ -68,9 +69,24 @@ const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [profileImage, setProfileImage] = useState<string>("https://placehold.co/60x60");
+    const [profileImage, setProfileImage] = useState<string>("");
     const fileInputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
+
+    const signupMutation = useMutation({
+        mutationFn: async (formData: { username: string; password: string; email: string; profileImageUrl: string }) => {
+            const response = await axios.post('https://lazy-shaylah-guhyunwoo-777b581b.koyeb.app/users/sign-up', formData);
+            return response.data;
+        },
+        onSuccess: () => {
+            alert('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
+            navigate('/login');
+        },
+        onError: (error) => {
+            alert('회원가입에 실패했습니다.');
+            console.error('Signup error:', error);
+        }
+    });
 
     const handleImageClick = () => {
         fileInputRef.current?.click();
@@ -87,28 +103,21 @@ const SignUp = () => {
         }
     };
 
-    const handleSubmit = async () => {
-        if (password !== confirmPassword) {
-            alert('Password does not match.');
-            return;
+    const handleSubmit = () => {
+        const formData = {
+            username,
+            password,
+            email,
+            profileImageUrl: profileImage || "https://placehold.co/60x60"
+        };
+        signupMutation.mutate(formData);
+
+        if (signupMutation.isSuccess) {
+            navigate('/login');
         }
-
-        try {
-            const response = await axios.post('https://lazy-shaylah-guhyunwoo-777b581b.koyeb.app/users/sign-up', {
-                username,
-                email,
-                password,
-                profileImageUrl: profileImage
-            });
-
-            if (response.status === 200) {
-                alert('Sign up completed.');
-                navigate('/login');
-            } else {
-                alert('Sign up failed.');
-            }
-        } catch (error) {
-            alert('Sign up failed.');
+        if (signupMutation.isError) {
+            alert('회원가입에 실패했습니다.');
+            console.error('Signup error:', signupMutation.error);
         }
     };
 
