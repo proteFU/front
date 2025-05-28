@@ -5,24 +5,27 @@ import album from "../assets/album.png";
 import MusicPlayBar from "../shared/ui/MusicPlayBar";
 import BackIcon from "../shared/ui/BackIcon";
 import "../App/App.css";
+import NavigateBar from "../shared/ui/NavigateBar";
 
 const Background = styled.div`
     width: 100%;
-    min-height: 100vh;
+    height: 852px;
     display: flex;
     flex-direction: column;
     align-items: center;
     color: white;
+    overflow: hidden;
 `;
 
 const Container = styled.div`
+    flex: 1;
     width: 100%;
-    max-width: 361px;
     padding: 0 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-bottom: 70px;
 `;
 
 const AlbumArt = styled.img`
@@ -31,10 +34,7 @@ const AlbumArt = styled.img`
     border-radius: 50%;
     object-fit: cover;
     animation: spin 6s linear infinite;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 50px;
+    margin-top: 30px;
 
     @keyframes spin {
         from { transform: rotate(0deg); }
@@ -46,19 +46,21 @@ const SongTitle = styled.div`
     font-size: 20px;
     font-weight: 600;
     margin-top: 20px;
+    text-align: center;
 `;
 
 const Artist = styled.div`
     font-size: 14px;
     opacity: 0.7;
     margin-top: 4px;
+    text-align: center;
 `;
 
 const Lyrics = styled.div`
     text-align: center;
     font-size: 14px;
     line-height: 1.6;
-    margin-top: 20px;
+    margin-top: 24px;
     cursor: pointer;
 `;
 
@@ -70,17 +72,24 @@ const LyricsLine = styled.p<{ isHighlight?: boolean }>`
 `;
 
 const PlayBarWrapper = styled.div`
-    margin-top: 52px;
+    margin-top: 40px;
     width: 100%;
-    padding-bottom: 100px;
+    padding-bottom: 70px;
 `;
 
 const TopWrapper = styled.div`
     width: 100%;
-    max-width: 361px;
-    padding: 24px 16px 0;
+    max-width: 393px;
+    padding: 16px 16px 0;
     display: flex;
-    align-items: flex-start;
+`;
+
+const Footer = styled.div`
+    width: 100%;
+    background-color: #121212;
+    display: flex;
+    justify-content: center;
+    z-index: 100;
 `;
 
 const PlayMusic = () => {
@@ -136,6 +145,9 @@ const PlayMusic = () => {
                     />
                 </PlayBarWrapper>
             </Container>
+            <Footer>
+                <NavigateBar />
+            </Footer>
         </Background>
     );
 };

@@ -13,8 +13,6 @@
 #root::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
     width: 393px;
     height: 852px;
     background-image: url('/public/songBG.png');
@@ -22,6 +20,7 @@
     background-position: center;
     opacity: 0.3;
     z-index: 0;
+    justify-items: center;;
 }
 
 #root > * {

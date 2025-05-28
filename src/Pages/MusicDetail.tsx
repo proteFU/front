@@ -5,18 +5,18 @@ import heartIcon from "../assets/heart.svg";
 import MusicPlayBar from "../shared/ui/MusicPlayBar";
 import "../App/App.css";
 import BackIcon from "../shared/ui/BackIcon";
+import NavigateBar from "../shared/ui/NavigateBar";
 
 const Background = styled.div`
     width: 100%;
-    min-height: 852px;
+    max-height: 852px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
 `;
 
 const Container = styled.div`
     width: 361px;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     padding: 0 4px;
@@ -28,8 +28,9 @@ const MainContent = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1;
-    gap: 12px;
-    margin-bottom: 20px;
+    gap: 8px;
+    margin-bottom: 12px;
+    overflow-y: auto;
 `;
 
 const AlbumContainer = styled.div`
@@ -70,7 +71,7 @@ const SongInfoContainer = styled.div`
 const Title = styled.div`
     font-size: 20px;
     font-weight: 600;
-    color: #FFF;
+    color: #fff;
 `;
 
 const Artist = styled.div`
@@ -117,9 +118,18 @@ const LyricLine = styled.div<{ isHighlight?: boolean }>`
 `;
 
 const PlayBarWrapper = styled.div`
-    display: flex;
     width: 100%;
-    margin-bottom: 200px;
+    padding-bottom: 64px;
+`;
+
+const Footer = styled.div`
+    width: 100%;
+    background-color: #121212;
+    display: flex;
+    justify-content: center;
+    z-index: 100;
+    position: absolute;
+    bottom: 0;
 `;
 
 const lyrics = [
@@ -133,7 +143,7 @@ const lyrics = [
     "I'm your wannabe 입 밖으론 못 뱉지",
     "Uh-oh, can't you see? Can't you see?",
     "Runnin', runnin', runnin', runnin'",
-    "Something's comin', comin', comin' (ah)"
+    "Something's comin', comin', comin'"
 ];
 
 const MusicDetail = () => {
@@ -200,15 +210,18 @@ const MusicDetail = () => {
                             </LyricLine>
                         ))}
                     </LyricsContainer>
+                    <PlayBarWrapper>
+                        <MusicPlayBar 
+                            isPlaying={isPlaying}
+                            onPlayPause={handlePlayPause}
+                            currentTime={currentTime}
+                            totalDuration={totalDuration}
+                        />
+                    </PlayBarWrapper>
                 </MainContent>
-                <PlayBarWrapper>
-                    <MusicPlayBar 
-                        isPlaying={isPlaying}
-                        onPlayPause={handlePlayPause}
-                        currentTime={currentTime}
-                        totalDuration={totalDuration}
-                    />
-                </PlayBarWrapper>
+                <Footer>
+                    <NavigateBar />
+                </Footer>
             </Container>
         </Background>
     );
