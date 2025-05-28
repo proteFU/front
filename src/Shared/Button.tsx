@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from 'react';
 import { css } from '@emotion/react';
 
 interface ButtonProps {
@@ -22,17 +21,9 @@ const buttonStyle = css`
     overflow: hidden;
 `;
 
-const Button: React.FC<ButtonProps> = ({ text, onClick }) => {
-    const [isClicked, setIsClicked] = useState(false);
-
-    const handleClick = () => {
-        setIsClicked(true);
-        console.log(true);
-        if (onClick) onClick();
-    };
-
+const Button = ({ text, onClick }: ButtonProps) => {
     return (
-        <div css={buttonStyle} onClick={handleClick}>
+        <div css={buttonStyle} onClick={onClick}>
             {text}
         </div>
     );
