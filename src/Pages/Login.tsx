@@ -59,6 +59,8 @@ const Login = () => {
                     }
                 });
                 console.log('로그인 응답:', response);
+                console.log('응답 헤더:', response.headers);
+                console.log('Set-Cookie 헤더:', response.headers['set-cookie']);
                 return response.data;
             } catch (error: any) {
                 console.log('로그인 에러 발생:', error);
@@ -74,6 +76,7 @@ const Login = () => {
             try {
                 const profileResponse = await api.get('/users/profile');
                 console.log('프로필 정보:', profileResponse.data);
+                console.log('로그인 성공 후 쿠키:', document.cookie);
                 alert('로그인되었습니다.');
                 navigate('/', { replace: true });
             } catch (error) {
@@ -97,20 +100,33 @@ const Login = () => {
         }
     });
 
-    const handleSubmit = () => {
+    const handleSubmit = (e?: React.FormEvent) => {
+        if (e) {
+            e.preventDefault(); // 폼 제출 기본 동작 방지
+        }
         if (!email || !password) {
             alert('이메일과 비밀번호를 모두 입력해주세요.');
             return;
         }
         console.log('로그인 시도 전:', { email, password });
-        loginMutation.mutate({ username: email, password });
+        loginMutation.mutate(
+            { username: email, password },
+            {
+                onSuccess: (data) => {
+                    console.log('로그인 성공 데이터:', data);
+                },
+                onError: (error) => {
+                    console.log('로그인 에러:', error);
+                }
+            }
+        );
     };
 
     return (
         <Background>
             <Container>
                 <HeadText text="Login" img={Cancel} onClick={() => navigate(-1)}/>
-                <Form>
+                <Form onSubmit={handleSubmit}>
                     <InputContainer>
                         <InnerContainer>
                             <InputLabel>Email</InputLabel>
