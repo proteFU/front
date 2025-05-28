@@ -3,7 +3,6 @@ import left from "../../assets/left.png";
 import right from "../../assets/right.png";
 import play from "../../assets/ing.png";
 import pause from "../../assets/stop.png";
-
 interface MusicPlayBarProps {
     isPlaying: boolean;
     onPlayPause: (playing: boolean) => void;
@@ -21,9 +20,10 @@ const Wrapper = styled.div`
 
 const ProgressBar = styled.div`
     width: 100%;
-    height: 3px;
+    height: 4px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 3px;
+    margin-bottom: 8px;
     cursor: pointer;
 `;
 
@@ -64,7 +64,7 @@ const ControlButton = styled.button`
     img {
         width: 32px;
         height: 32px;
-        opacity: 0.6;
+        opacity: 0.;
         transition: opacity 0.2s;
 
         &:hover {

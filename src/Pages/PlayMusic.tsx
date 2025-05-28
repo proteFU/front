@@ -43,11 +43,26 @@ const AlbumContainer = styled.div`
   gap: 12px;
 `;
 
-const AlbumArt = styled.div`
+interface AlbumArtProps {
+  isPlaying: boolean;
+}
+
+const AlbumArt = styled.div<AlbumArtProps>`
   width: 48px;
   height: 48px;
   border-radius: 50%;
   overflow: hidden;
+  animation: ${props => props.isPlaying ? 'rotate 10s linear infinite' : 'none'};
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
   img {
     width: 100%;
     height: 100%;
@@ -150,7 +165,7 @@ const PlayMusic = () => {
 
         <HeaderContent>
           <AlbumContainer>
-            <AlbumArt>
+            <AlbumArt isPlaying={isPlaying}>
               <img src={album} alt="Bad News" />
             </AlbumArt>
             <SongInfo>

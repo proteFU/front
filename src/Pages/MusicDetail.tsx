@@ -28,8 +28,8 @@ const MainContent = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1;
-    gap: 20px;
-    margin-bottom: 40px;
+    gap: 12px;
+    margin-bottom: 20px;
 `;
 
 const AlbumContainer = styled.div`
@@ -44,11 +44,21 @@ const AlbumImageContainer = styled.div`
     cursor: pointer;
 `;
 
-const AlbumArt = styled.img`
+const AlbumArt = styled.img<{ isPlaying: boolean }>`
     width: 80px;
     height: 80px;
     border-radius: 99px;
     object-fit: cover;
+    animation: ${props => props.isPlaying ? 'spin 4s linear infinite' : 'none'};
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 `;
 
 const SongInfoContainer = styled.div`
@@ -67,6 +77,7 @@ const Artist = styled.div`
     font-size: 12px;
     color: rgba(255, 255, 255, 0.7);
 `;
+
 interface LikeButtonProps {
     isLiked: boolean;
 }
@@ -79,11 +90,11 @@ const LikeButton = styled.button<LikeButtonProps>`
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     img {
         width: 24px;
         height: 24px;
-        opacity: ${props => props.isLiked ? 1 : 0.6};
+        opacity: ${props => (props.isLiked ? 1 : 0.6)};
     }
 `;
 
@@ -91,25 +102,24 @@ const LyricsContainer = styled.div`
     flex: 1;
     overflow-y: auto;
     padding: 0 4px;
-    
+
     &::-webkit-scrollbar {
         display: none;
     }
 `;
 
 const LyricLine = styled.div<{ isHighlight?: boolean }>`
-    font-size: 20px;
+    font-size: ${props => (props.isHighlight ? '24px' : '20px')};
     line-height: 1.6;
     margin-bottom: 8px;
-    color: ${props => props.isHighlight ? '#FFF' : 'rgba(255, 255, 255, 0.5)'};
-    font-weight: ${props => props.isHighlight ? '500' : 'normal'};
-    font-size: ${props => props.isHighlight ? '24px' : '20px'};
+    color: ${props => (props.isHighlight ? '#FFF' : 'rgba(255, 255, 255, 0.5)')};
+    font-weight: ${props => (props.isHighlight ? '500' : 'normal')};
 `;
 
 const PlayBarWrapper = styled.div`
     display: flex;
     width: 100%;
-    margin-bottom: 90px;
+    margin-bottom: 200px;
 `;
 
 const lyrics = [
@@ -134,10 +144,10 @@ const MusicDetail = () => {
 
     useEffect(() => {
         let interval: number;
-        
+
         if (isPlaying) {
             interval = window.setInterval(() => {
-                setCurrentTime((prev: number) => {
+                setCurrentTime(prev => {
                     if (prev >= totalDuration) {
                         setIsPlaying(false);
                         return totalDuration;
@@ -170,6 +180,7 @@ const MusicDetail = () => {
                             <AlbumArt 
                                 src={album} 
                                 alt="Bad News"
+                                isPlaying={isPlaying}
                             />
                         </AlbumImageContainer>
                         <SongInfoContainer>
