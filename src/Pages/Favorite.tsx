@@ -1,10 +1,9 @@
 import styled from '@emotion/styled';
-import PlayListThumbnail from '../../Shared/PlayListTumbnaill/PlayListThumbnail.tsx';
-import SongThumbnaill from '../../Shared/SongTumbnaill/SongThumbnaill.tsx';
-// import NavigateBar from './NavigateBar';
-import MainBackgroundImage from '../../assets/proteBackground2.png';
-import { PlayListThumbnailData } from '../dummy.tsx';
-import { SongThumbnaillData } from '../dummy.tsx';
+import PlayListThumbnail from '../Shared/PlayListTumbnaill/PlayListThumbnail.tsx';
+import SongThumbnaill from '../Shared/SongTumbnaill/SongThumbnaill.tsx';
+import background from '../assets/background.svg';
+import { PlayListThumbnailData } from './dummy.tsx';
+import { SongThumbnaillData } from './dummy.tsx';
 
 
 const Favorite = () => {
@@ -30,13 +29,19 @@ const Favorite = () => {
 }
 
 const Root = styled.div`
-    width: 361px; 
-    height: 798px;
-    background-image: url(${MainBackgroundImage});
-    background-color: #292929;
-    padding: 54px 16px 0px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-image: url(${background});
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
+    padding: 8px 16px;
     overflow-x: scroll;
-    position: relative;
+    
     
 `
 
@@ -53,7 +58,7 @@ const Title = styled.h1`
 const PlayListSection = styled.div`
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    gap: 41px;
 `
 
 const SongSection = styled.div`
