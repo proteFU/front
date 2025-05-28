@@ -44,12 +44,12 @@ const AlbumImageContainer = styled.div`
     cursor: pointer;
 `;
 
-const AlbumArt = styled.img<{ isPlaying: boolean }>`
+const AlbumArt = styled.img`
     width: 80px;
     height: 80px;
     border-radius: 99px;
     object-fit: cover;
-    animation: ${props => props.isPlaying ? 'spin 4s linear infinite' : 'none'};
+    animation: spin 4s linear infinite;
 
     @keyframes spin {
         0% {
@@ -180,7 +180,6 @@ const MusicDetail = () => {
                             <AlbumArt 
                                 src={album} 
                                 alt="Bad News"
-                                isPlaying={isPlaying}
                             />
                         </AlbumImageContainer>
                         <SongInfoContainer>

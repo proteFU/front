@@ -1,200 +1,143 @@
-import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import album from "../assets/album.png";
 import MusicPlayBar from "../shared/ui/MusicPlayBar";
+import BackIcon from "../shared/ui/BackIcon";
 import "../App/App.css";
 
-const Container = styled.div`
-  width: 361px;
-  height: 798px;
-  display: flex;
-  flex-direction: column;
-  padding: 12px 16px;
-`;
-
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 8px;
-`;
-
-const BackButton = styled.button`
-  background: none;
-  border: none;
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
-  padding: 4px;
-`;
-
-const HeaderContent = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-top: 24px;
-  margin-bottom: 32px;
-`;
-
-const AlbumContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-`;
-
-interface AlbumArtProps {
-  isPlaying: boolean;
-}
-
-const AlbumArt = styled.div<AlbumArtProps>`
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  overflow: hidden;
-  animation: ${props => props.isPlaying ? 'rotate 10s linear infinite' : 'none'};
-
-  @keyframes rotate {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  img {
+const Background = styled.div`
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+`;
+
+const Container = styled.div`
+    width: 100%;
+    max-width: 361px;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+
+const AlbumArt = styled.img`
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
     object-fit: cover;
-  }
+    animation: spin 6s linear infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
 `;
 
-const SongInfo = styled.div`
-  flex: 1;
-`;
-
-const Title = styled.div`
-  font-size: 16px;
-  font-weight: 600;
-  color: white;
+const SongTitle = styled.div`
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 20px;
 `;
 
 const Artist = styled.div`
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    opacity: 0.7;
+    margin-top: 4px;
 `;
 
-const LikeButton = styled.button`
-  background: none;
-  border: none;
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-  padding: 8px;
+const Lyrics = styled.div`
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-top: 20px;
+    cursor: pointer;
 `;
 
-const LyricsContainer = styled.div`
-  flex: 1;
-  overflow-y: auto;
-  padding: 0 4px;
-  margin-top: 20px;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+const LyricsLine = styled.p<{ isHighlight?: boolean }>`
+    margin: 4px 0;
+    font-weight: ${({ isHighlight }) => (isHighlight ? 600 : 400)};
+    font-size: ${({ isHighlight }) => (isHighlight ? '16px' : '14px')};
+    opacity: ${({ isHighlight }) => (isHighlight ? 1 : 0.5)};
 `;
 
-const LyricLine = styled.div<{ isHighlight?: boolean }>`
-  font-size: 15px;
-  line-height: 1.8;
-  margin-bottom: 16px;
-  color: ${props => props.isHighlight ? 'white' : 'rgba(255, 255, 255, 0.5)'};
-  font-weight: ${props => props.isHighlight ? '500' : 'normal'};
+const PlayBarWrapper = styled.div`
+    margin-top: 52px;
+    width: 100%;
+    padding-bottom: 100px;
 `;
 
-const lyrics = [
-  "How do I look? 내가 변했나구?",
-  "티비를 틀어봐 I'm the woman on the moon",
-  "네 머리 위로 사뿐사뿐 걸어 feel no gravity",
-  "우린 어떤 때보다도 ain't no diggity",
-  "What goes around, some comes around",
-  "안 들려, 몰라",
-  "Look at me now 느낌이 와, 다르지 너와",
-  "I'm your wannabe 입 밖으론 못 뱉지",
-  "Uh-oh, can't you see? Can't you see?",
-  "Runnin', runnin', runnin', runnin'",
-  "Something's comin', comin', comin' (ah)"
-];
+const TopWrapper = styled.div`
+    width: 100%;
+    max-width: 361px;
+    padding: 24px 16px 0;
+    display: flex;
+    align-items: flex-start;
+`;
 
 const PlayMusic = () => {
-  const navigate = useNavigate();
-  const [currentTime, setCurrentTime] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const totalDuration = 210; 
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [currentTime, setCurrentTime] = useState(0);
+    const totalDuration = 190;
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    let interval: number;
-    
-    if (isPlaying) {
-      interval = window.setInterval(() => {
-        setCurrentTime(prev => {
-          if (prev >= totalDuration) {
-            setIsPlaying(false);
-            return totalDuration;
-          }
-          return prev + 1;
-        });
-      }, 1000);
-    }
+    useEffect(() => {
+        if (!isPlaying) return;
 
-    return () => {
-      if (interval) clearInterval(interval);
+        const interval = setInterval(() => {
+            setCurrentTime(prev => {
+                if (prev >= totalDuration) {
+                    clearInterval(interval);
+                    return totalDuration;
+                }
+                return prev + 1;
+            });
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [isPlaying, totalDuration]);
+
+    const handlePlayPause = (play: boolean) => {
+        setIsPlaying(play);
     };
-  }, [isPlaying]);
 
-  const handlePlayPause = (playing: boolean) => {
-    setIsPlaying(playing);
-  };
+    const handleLyricsClick = () => {
+        navigate("/detail");
+    };
 
-  return (
-      <Container>
-        
-        <Header>
-          <BackButton onClick={() => navigate(-1)}>←</BackButton>
-        </Header>
-
-        <HeaderContent>
-          <AlbumContainer>
-            <AlbumArt isPlaying={isPlaying}>
-              <img src={album} alt="Bad News" />
-            </AlbumArt>
-            <SongInfo>
-              <Title>Bad News</Title>
-              <Artist>kiss of life</Artist>
-            </SongInfo>
-          </AlbumContainer>
-          <LikeButton>♡</LikeButton>
-        </HeaderContent>
-
-        <LyricsContainer>
-          {lyrics.map((lyric, index) => (
-            <LyricLine 
-              key={index} 
-              isHighlight={index === 1}
-            >
-              {lyric}
-            </LyricLine>
-          ))}
-        </LyricsContainer>
-
-        <MusicPlayBar 
-          isPlaying={isPlaying} 
-          onPlayPause={handlePlayPause}
-          currentTime={currentTime}
-          totalDuration={totalDuration}
-        />
-      </Container>
-  );
+    return (
+        <Background>
+            <TopWrapper>
+                <BackIcon />
+            </TopWrapper>
+            <Container>
+                <AlbumArt src={album} alt="Album Art" />
+                <SongTitle>Bad News</SongTitle>
+                <Artist>kiss of life</Artist>
+                <Lyrics onClick={handleLyricsClick}>
+                    <LyricsLine>How do I look? 내가 변했나구?</LyricsLine>
+                    <LyricsLine isHighlight>티비를 틀어봐 I'm the woman on the moon</LyricsLine>
+                    <LyricsLine>네 머리 위로 사뿐사뿐 걸어 feel no gravity</LyricsLine>
+                </Lyrics>
+                <PlayBarWrapper>
+                    <MusicPlayBar
+                        isPlaying={isPlaying}
+                        onPlayPause={handlePlayPause}
+                        currentTime={currentTime}
+                        totalDuration={totalDuration}
+                    />
+                </PlayBarWrapper>
+            </Container>
+        </Background>
+    );
 };
 
-export default PlayMusic; 
+export default PlayMusic;
