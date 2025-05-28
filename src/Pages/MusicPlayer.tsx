@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import album from '../assets/album.png';
-import MusicPlayBar from '../Shared/MusicPlayBar';
-import HeadText from '../Shared/UI/HeadText';
+import MusicPlayBar from '../shared/MusicPlayBar';
+import HeadText from '../shared/ui/HeadText';
 import backgroundImage from "../assets/songBG.png";
 import styled from "@emotion/styled";
 import Cancel from "../assets/취소.svg";

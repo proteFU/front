@@ -8,7 +8,7 @@ import Home from '../Pages/Home';
 import ChooseEmotion from '../Pages/ChooseEmotion';
 import Login from "../Pages/Login";
 import SignUp from "../Pages/SignUp";
-import GNB from '../Shared/UI/GNB';
+import GNB from '../shared/ui/GNB';
 import styled from "@emotion/styled";
 
 const PageContainer = styled.div`

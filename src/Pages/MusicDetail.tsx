@@ -1,7 +1,7 @@
 import album from "../assets/album.png";
-import MusicPlayBar from '../Shared/MusicPlayBar';
+import MusicPlayBar from '../shared/MusicPlayBar';
 import heart from "../assets/heart.png";
-import HeadText from '../Shared/UI/HeadText';
+import HeadText from '../shared/ui/HeadText';
 import styled from "@emotion/styled";
 import backgroundImage from "../assets/songBG.png";
 import { useNavigate } from "react-router-dom";

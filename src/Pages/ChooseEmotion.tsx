@@ -11,8 +11,8 @@ import lonely from '../assets/Emotion/lonely.svg';
 import nostalgic from '../assets/Emotion/nostalgic.svg';
 import remorseful from '../assets/Emotion/remorseful.svg'
 import sad from '../assets/Emotion/sad.svg'
-import Button from '../Shared/Button';
-import api from '../Shared/api/axios';
+import Button from '../shared/Button';
+import api from '../shared/api/axios';
 import { useNavigate } from 'react-router-dom';
 
 const BackgroundImage = css`

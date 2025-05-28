@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import HeadText from '../Shared/UI/HeadText';
+import HeadText from '../shared/ui/HeadText';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { background } from '../Shared/UI/common';
+import { background } from '../shared/ui/common';
 import { playlists } from '../Entites/Dummy';
 
 const Background = styled.div`

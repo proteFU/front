@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import ArrowRight from "../../assets/다음.svg";
-import { container } from "../../Shared/UI/common";
+import { container } from "../../shared/ui/common";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useProfileStore from "../../Entites/Store/profileStore";

@@ -9,7 +9,7 @@ import {
     Legend
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
-import { container, card } from "../../Shared/UI/common";
+import { container, card } from "../../shared/ui/common";
 import axios from "axios";
 import { useEffect, useState } from "react";
 

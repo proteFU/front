@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { background } from "../Shared/UI/common";
+import { background } from "../shared/ui/common";
 import Container from "../widgets/Profile/Container";
-import HeadText from "../Shared/UI/HeadText";
+import HeadText from "../shared/ui/HeadText";
 import { InputContainer, InnerContainer, InputLabel, StyledInput } from "../Shared/UI/Input";
 import ButtonFunction from "../Shared/UI/Button";
 import axios from "axios";

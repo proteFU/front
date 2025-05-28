@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import Container from "../widgets/Profile/Container";
-import HeadText from "../Shared/UI/HeadText";
+import HeadText from "../shared/ui/HeadText";
 import ProfileCard from "../widgets/Profile/ProfileCard";
-import { background } from "../Shared/UI/common";
+import { background } from "../shared/ui/common";
 import EmotionHistory from "../widgets/Profile/EmotionHistory";
 import HistoryCard from "../widgets/Profile/HistoryCard";
 import { playlists } from "../Entites/Dummy";
