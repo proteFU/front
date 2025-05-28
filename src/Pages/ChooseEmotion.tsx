@@ -12,6 +12,8 @@ import nostalgic from '../assets/Emotion/nostalgic.svg';
 import remorseful from '../assets/Emotion/remorseful.svg'
 import sad from '../assets/Emotion/sad.svg'
 import Button from '../Shared/Button';
+import api from '../Shared/api/axios';
+import { useNavigate } from 'react-router-dom';
 
 const BackgroundImage = css`
     position: fixed;
@@ -74,6 +76,7 @@ const EmotionGrid = css`
 `;
 
 const ChooseEmotion: React.FC = () => {
+    const navigate = useNavigate();
     const emotions = [
         { image: happy, name: 'happy', color: '#FC1597' },
         { image: anxious, name: 'anxious', color: '#FEA91D' },
@@ -92,7 +95,7 @@ const ChooseEmotion: React.FC = () => {
         setCount(selectedEmotions.length);
     }, [selectedEmotions]);
 
-    const handleEmotionClick = (emotion: string) => {
+    const handleEmotionClick =  (emotion: string) => {
         setSelectedEmotions((prev) => {
             if (prev.includes(emotion)) {
                 return prev.filter(e => e !== emotion);
@@ -102,10 +105,37 @@ const ChooseEmotion: React.FC = () => {
         });
     };
 
-    const handleContinueClick = () => {
+    const handleContinueClick = async () => {
         setIsClicked(true);
         console.log(true);
         console.log(selectedEmotions.length > 0 ? selectedEmotions : 'null');
+        if (selectedEmotions.length === 0) {
+            alert('감정을 선택해주세요');
+            return;
+        }
+
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('로그인이 필요합니다.');
+            navigate('/login');
+            return;
+        }
+
+        try {
+            const response = await api.post('/emotions', {
+                "emotionList": selectedEmotions
+            });
+
+            if (response.status === 200) {
+                alert('감정 전달 완료.');
+                navigate('/music-player');
+            } else {
+                alert('감정 전달 실패.');
+            }
+        } catch (error) {
+            console.error('API Error:', error);
+            alert('감정 전달 실패.');
+        }
     };
 
     const selectedColors = selectedEmotions.map(emotionName => {

@@ -1,5 +1,6 @@
+/** @jsxImportSource @emotion/react */
 import { useState } from "react";
-import { css } from '@emotion/css';
+import { css } from '@emotion/react';
 import left from "../assets/left.png";
 import right from "../assets/right.png";
 import ing from "../assets/ing.png";
@@ -16,15 +17,15 @@ function MusicPlayBar({ isPlaying, onPlayStateChange }: MusicPlayBarProps) {
     };
     
     return (
-        <div className={wrapper}>
-            <div className={Line}></div>
-            <div className={container}>
+        <div css={wrapper}>
+            <div css={Line}></div>
+            <div css={container}>
                 <img src={left} alt="left" />
                 <img
                     src={isPlaying ? ing : stop}
                     alt={isPlaying ? "playing" : "stopped"}
                     onClick={togglePlay}
-                    className={PlayStyle}
+                    css={PlayStyle}
                 />
                 <img src={right} alt="right" />
             </div>

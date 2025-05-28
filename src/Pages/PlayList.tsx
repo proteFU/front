@@ -1,20 +1,25 @@
 import styled from "@emotion/styled";
-import MainBackgroundImage from '../../assets/proteBackground2.png';
-import dummyThumbnail from "../../assets/dummyThumbnail.png";
-import PlatIcon from "../../assets/PlayIcon.svg";
-import SongThumbnaill from "../../Shared/SongTumbnaill/SongThumbnaill.tsx";
-import NavigateBar from "../../Shared/NavigateBar.tsx";
-import { SongThumbnaillData } from '../dummy.tsx';
+import background from '../assets/background.svg';
+import PlatIcon from "../assets/PlayIcon.svg";
+import SongThumbnaill from "../Shared/SongTumbnaill/SongThumbnaill.tsx";
+import { SongThumbnaillData } from './dummy.tsx';
 
-const PlayList = () => {
+export interface PlayListInfoProps {
+  playlistTitle: string;
+  playlistTime: string;
+  playlistSongsCount: number;
+  playlistImage: string;
+}
+
+const PlayList = ({playlistImage, playlistTitle, playlistTime, playlistSongsCount} : PlayListInfoProps) => {
   return (
     <Root>
       <PlayListInfo>
-        <Image src={dummyThumbnail} alt={"이미지"}/>
+        <Image src={playlistImage} alt={"이미지"}/>
         <Styleddiv>
           <div>
-            <PlayListInfoContent isTitle>노래 제목</PlayListInfoContent>
-            <PlayListInfoContent>23 Songs · 2h 34m</PlayListInfoContent>
+            <PlayListInfoContent isTitle>{playlistTitle}</PlayListInfoContent>
+            <PlayListInfoContent>{playlistSongsCount} Songs · {playlistTime}</PlayListInfoContent>
           </div>
           <StyledButton>
             <IconImage src={PlatIcon}/>
@@ -26,19 +31,23 @@ const PlayList = () => {
       {SongThumbnaillData.map((data) => (
         <SongThumbnaill img={data.img} title={data.title} artists={data.artists}/>
       ))}
-      <NavigateBar/>
+      <div style={{height: "60px"}}/>
     </Root>
   )
 }
 
 const Root = styled.div`
-    width: 361px;
-    height: 798px;
-    background-image: url(${MainBackgroundImage});
-    background-color: #292929;
-    padding: 54px 16px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-image: url(${background});
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 8px 16px 8px 16px;
     overflow-x: scroll;
-    
 `
 
 const PlayListInfo = styled.div`
@@ -90,7 +99,7 @@ const Styleddiv=styled.div`
     gap:20px;
 `
 
-const Title = styled.h1`
+const Title = styled.p`
     color: #FFF;
     font-family: Pretendard,serif;
     font-size: 32px;
