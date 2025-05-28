@@ -5,11 +5,14 @@ import right from "../assets/right.png";
 import ing from "../assets/ing.png";
 import stop from "../assets/stop.png";
 
-function MusicPlayBar() {
-    const [isPlaying, setIsPlaying] = useState(true); 
+interface MusicPlayBarProps {
+    isPlaying: boolean;
+    onPlayStateChange: (isPlaying: boolean) => void;
+}
 
+function MusicPlayBar({ isPlaying, onPlayStateChange }: MusicPlayBarProps) {
     const togglePlay = () => {
-        setIsPlaying(!isPlaying);
+        onPlayStateChange(!isPlaying);
     };
     
     return (
