@@ -6,6 +6,7 @@ import MusicPlayBar from "../shared/ui/MusicPlayBar";
 import "../App/App.css";
 import BackIcon from "../shared/ui/BackIcon";
 import NavigateBar from "../shared/ui/NavigateBar";
+import axios from 'axios';
 
 const Background = styled.div`
     width: 100%;
@@ -147,7 +148,7 @@ const lyrics = [
 ];
 
 const MusicDetail = () => {
-    const [isLiked, setIsLiked] = useState(false);
+    const [isLiked] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     const totalDuration = 210;
@@ -171,10 +172,18 @@ const MusicDetail = () => {
             if (interval) clearInterval(interval);
         };
     }, [isPlaying, totalDuration]);
+    
 
-    const toggleLike = () => {
-        setIsLiked(!isLiked);
-    };
+    async function toggleLike() {
+      try {
+        const response = await axios.post('/api/songs/likes', {
+
+        });
+        console.log('좋아요 성공', response.data);
+      } catch (error) {
+        console.error('좋아요 요청 실패:', error);
+      }
+    }
 
     const handlePlayPause = (playing: boolean) => {
         setIsPlaying(playing);

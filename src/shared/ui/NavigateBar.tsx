@@ -34,8 +34,6 @@ const Root = styled.div`
     position: absolute;
     bottom: 0;
     background: rgba(204, 204, 204, 0.50);
-
-
 `
 
 const IconsDiv = styled.div`
