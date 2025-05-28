@@ -59,11 +59,8 @@ const Login = () => {
                     }
                 });
                 console.log('로그인 응답:', response);
-<<<<<<< HEAD
-=======
                 console.log('응답 헤더:', response.headers);
                 console.log('Set-Cookie 헤더:', response.headers['set-cookie']);
->>>>>>> origin/develop
                 return response.data;
             } catch (error: any) {
                 console.log('로그인 에러 발생:', error);
@@ -77,13 +74,9 @@ const Login = () => {
         onSuccess: async (data) => {
             console.log('로그인 성공:', data);
             try {
-<<<<<<< HEAD
-                const profileResponse = await api.get('/users/profile');
-=======
                 const profileResponse = await api.get('/users/profile', {
                     withCredentials: true
                 });
->>>>>>> origin/develop
                 console.log('프로필 정보:', profileResponse.data);
                 alert('로그인되었습니다.');
                 navigate('/', { replace: true });
@@ -108,22 +101,15 @@ const Login = () => {
         }
     });
 
-<<<<<<< HEAD
-    const handleSubmit = () => {
-=======
     const handleSubmit = (e?: React.FormEvent) => {
         if (e) {
             e.preventDefault(); // 폼 제출 기본 동작 방지
         }
->>>>>>> origin/develop
         if (!email || !password) {
             alert('이메일과 비밀번호를 모두 입력해주세요.');
             return;
         }
         console.log('로그인 시도 전:', { email, password });
-<<<<<<< HEAD
-        loginMutation.mutate({ username: email, password });
-=======
         loginMutation.mutate(
             { username: email, password },
             {
@@ -135,18 +121,13 @@ const Login = () => {
                 }
             }
         );
->>>>>>> origin/develop
     };
 
     return (
         <Background>
             <Container>
                 <HeadText text="Login" img={Cancel} onClick={() => navigate(-1)}/>
-<<<<<<< HEAD
-                <Form>
-=======
                 <Form onSubmit={handleSubmit}>
->>>>>>> origin/develop
                     <InputContainer>
                         <InnerContainer>
                             <InputLabel>Email</InputLabel>
